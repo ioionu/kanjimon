@@ -1,0 +1,22 @@
+{
+  "name": "kanjimon",
+  "version": "1.0.0",
+  "description": "kanji fight to the death!",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "browserify": "^12.0.1",
+    "fetch-polyfill": "^0.8.1",
+    "gulp": "^3.9.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "marked": "^0.3.5",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "whatwg-fetch": "^0.10.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "josh io@ioio.nu",
+  "license": "GPL-3.0"
+}
