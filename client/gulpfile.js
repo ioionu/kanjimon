@@ -4,10 +4,10 @@ var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
 var watchify = require('watchify');
-var babel = require('babelify'); 
+var babel = require('babelify');
 
 function compile(watch) {
-  var bundler = watchify(browserify(['./src/fetch.js', './src/script.js'], { debug: true }).transform(babel));
+  var bundler = watchify(browserify(['./src/script.js'], { debug: true }).transform(babel));
 
   function rebundle() {
     bundler.bundle()
@@ -17,6 +17,10 @@ function compile(watch) {
       .pipe(sourcemaps.init({ loadMaps: true }))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest('./js'));
+
+    gulp.src(['./src/serviceWorker.js'])
+      .pipe(gulp.dest('./js'))
+    ;
   }
 
   if (watch) {
@@ -24,6 +28,11 @@ function compile(watch) {
       console.log('-> bundling...');
       rebundle();
     });
+    gulp.watch(['./src/serviceWorker.js'], function() {
+      console.log('-> bundling sw...');
+      rebundle();
+    });
+
   }
 
   rebundle();
@@ -31,7 +40,7 @@ function compile(watch) {
 
 function watch() {
   return compile(true);
-};
+}
 
 gulp.task('build', function() { return compile(); });
 gulp.task('watch', function() { return watch(); });

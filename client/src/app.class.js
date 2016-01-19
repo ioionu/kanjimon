@@ -6,7 +6,6 @@ var KanjiMon = require('./kanjimon.class.js');
 var App = class {
   constructor(db) {
     this.db = db;
-
   }
 
   init() {

@@ -9,6 +9,23 @@ var App = require('./app.class.js');
 var DB = require('./db.class.js');
 var dict;
 
+// Checking if service worker is registered. If it's not, register it
+// and reload the page to be sure the client is under service worker's control.
+navigator.serviceWorker.getRegistration().then(function(registration) {
+  if (!registration || !navigator.serviceWorker.controller) {
+    navigator.serviceWorker.register('/serviceWorker.js').then(function() {
+      console.log('Service worker registered, reloading the page');
+      //window.location.reload();
+    });
+  } else {
+    console.log('DEBUG: client is under the control of service worker');
+    proceed();
+  }
+});
+
+function proceed() {
+  console.log("fuuuuuu");
+}
 
 function findByKanji(kanji) {
   var def = dict.kanjidic2.character.find(
@@ -27,19 +44,6 @@ function findByKanji(kanji) {
   return km;
 }
 
-/*
-var search = document.getElementById("search");
-  search.addEventListener("click", function(e){
-  var kanji = document.getElementById("search-term").value;
-  var km = findByKanji(kanji);
-
-  ReactDOM.render(
-    <DefBox data={km} />,
-    document.getElementById('drop')
-  );
-});
-*/
-
 function init() {
   fetch('/client/db/kanjidic2.json')
   .then(function(response){
@@ -50,7 +54,6 @@ function init() {
     document.getElementById("drop").innerHTML = "done!";
     return dict;
   }).then(function(dict){
-    //console.log("dict dump", dict.kanjidic2.character);
     var db = new DB(dict.kanjidic2.character);
     var app = new App(db);
     app.init();
@@ -59,3 +62,13 @@ function init() {
 }
 
 init();
+
+var httpRequest = new XMLHttpRequest();
+httpRequest.onreadystatechange = function(){
+  // process the server response
+  console.log("stuff responded");
+};
+window.setTimeout(function(){
+  httpRequest.open('GET', '/client/db/kanjidic2.json', true);
+  fetch('/client/db/kanjidic2.json').then(function(res){console.log("derp");});
+}, 2000);

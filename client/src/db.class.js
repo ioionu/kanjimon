@@ -5,6 +5,20 @@ var DB = class DB {
     this.db = db;
   }
 
+  getDB(url) {
+    var db = this;
+    fetch('/client/db/kanjidic2.json')
+    .then(function(response){
+      var dict = response.json();
+      return dict;
+    })
+    .then(function(dict){
+      db.db = dict.kanjidic2.character;
+    })
+    ;
+
+  }
+
   getKanjisByJLPT(jlpt) {
     //console.log("jlpt filter:", dict);
     var kanjis = this.db.filter(

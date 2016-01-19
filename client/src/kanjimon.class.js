@@ -1,10 +1,10 @@
-
 var KanjiMon = class KanjiMon {
   constructor(kanji) {
     if(typeof kanji == 'undefined') {
       throw new ReferenceError();
     }
     this.kanji = kanji;
+    this.kanji.key = this.kanji.literal;
     //  console.log("i am kanji");
   }
 

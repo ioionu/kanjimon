@@ -23,20 +23,28 @@ var UISearchBox = React.createClass({
       this.setState({char: char, keyword:keyword});
     }
   },
+  getDB: function (e) {
+    console.log("fu");
+    this.props.onGetDB();
+    e.preventDefault();
+  },
   render: function() {
     return (
-      <form className="search" onSubmit={this.handleSearch}>
-        <input
-          name="char"
-          type="text"
-          placeholder="search me"
-          onChange={this.handleCharChange}
-          />
-        <input
-          type="submit"
-          value="捜"
-          />
-      </form>
+      <div>
+        <form className="search" onSubmit={this.handleSearch}>
+          <input
+            name="char"
+            type="text"
+            placeholder="search me"
+            onChange={this.handleCharChange}
+            />
+          <input
+            type="submit"
+            value="捜"
+            />
+        </form>
+        <button onClick={this.getDB}>フエッチ</button>
+      </div>
     );
   }
 });
@@ -45,7 +53,7 @@ var UIDefList = React.createClass({
   render: function() {
     var defNodes = this.props.data.map(function(def){
       return (
-        <UIDefBox data={def}/>
+        <UIDefBox key={def.kanji.key} data={def}/>
       );
     });
     return (
@@ -99,6 +107,9 @@ var UIKanjiMon = React.createClass({
     });
     return({defs: defs});
   },
+  getDB: function() {
+    this.props.data.db.getDB();
+  },
   handleKanjiMonSearch: function(keyword) {
     console.log("i am handleKanjiMonSearch", keyword);
     var defs;
@@ -138,7 +149,10 @@ var UIKanjiMon = React.createClass({
   render: function() {
     return (
       <div clasName="kanjimon" url="/client/db/kanjidic2.json">
-        <UISearchBox onKanjiMonSearch={this.handleKanjiMonSearch} />
+        <UISearchBox
+          onKanjiMonSearch={this.handleKanjiMonSearch}
+          onGetDB={this.getDB}
+          />
         <UIDefList data={this.state.defs} />
         <div className="about">
           <div className="version">Version {this.props.version}</div>
