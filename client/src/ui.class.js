@@ -1,6 +1,12 @@
 var React = require('react');
 var marked = require('marked');
+var browserHistory = require('react-router').browserHistory;
+
+
+var DB = require('./db.class.js');
 var KanjiMon = require('./kanjimon.class.js');
+
+var UIDefList = require('./ui/uideflist.class.js');
 
 var UISearchBox = React.createClass({
   search: function(e) {
@@ -23,11 +29,6 @@ var UISearchBox = React.createClass({
       this.setState({char: char, keyword:keyword});
     }
   },
-  getDB: function (e) {
-    console.log("fu");
-    this.props.onGetDB();
-    e.preventDefault();
-  },
   render: function() {
     return (
       <div>
@@ -43,54 +44,20 @@ var UISearchBox = React.createClass({
             value="捜"
             />
         </form>
-        <button onClick={this.getDB}>フエッチ</button>
       </div>
     );
   }
 });
 
-var UIDefList = React.createClass({
+var UIBattle = React.createClass({
+  battle: function(){
+    console.log("lol");
+  },
   render: function() {
-    var defNodes = this.props.data.map(function(def){
-      return (
-        <UIDefBox key={def.kanji.key} data={def}/>
-      );
-    });
+    var defNodes = 123;
     return (
       <div className="defList">
-        {defNodes}
-      </div>
-    );
-  }
-});
-
-var UIDefBox = React.createClass({
-  render: function() {
-    console.log("i am def render", this.props);
-    var char = this.props.data; //new KanjiMon( this.props.data.db.getRecordByCharacter(this.props.data.char) );
-    var readings = char.getReading();
-    var english = char.getEnglish().join(", ");
-    var stroke_count = char.getStrokeCount();
-    var jlpt = char.getJLPT();
-    var literal = char.getLiteral();
-
-    return (
-      <div className="defBox">
-        <h2>{literal} : Definition</h2>
-        <dl>
-          <dt>Kanji</dt>
-          <dd>{literal}</dd>
-          <dt>Onyomi</dt>
-          <dd>{readings.ja_on}</dd>
-          <dt>Kunyomi</dt>
-          <dd>{readings.ja_kun}</dd>
-          <dt>Translation</dt>
-          <dd>{english}</dd>
-          <dt>Stroke Count</dt>
-          <dd>{stroke_count}</dd>
-          <dt>JLPT</dt>
-          <dd>{jlpt}</dd>
-        </dl>
+        <button onClick={this.battle}>こうげき</button>
       </div>
     );
   }
@@ -99,46 +66,41 @@ var UIDefBox = React.createClass({
 var UIKanjiMon = React.createClass({
   componentDidMount: function() {
     console.log("i am mount");
+    this.db = new DB();
+    var _this = this; //TODO: make bind work with promise?
+    return _this.db.getDB('/client/db/kanjidic2.json')
+    .then(function(){
+      var defs = _this.db.getKajisByReading("rain").map(function(def){
+        return new KanjiMon(def);
+      });
+      return defs;
+    })
+    .then(function(defs){
+      _this.setState({
+        defs: defs,
+        db: _this.db
+      });
+    });
   },
   getInitialState: function() {
-    console.log("i am initial state", this.props.data);
-    var defs = this.props.data.db.getKajisByReading("rain").map(function(def){
-      return new KanjiMon(def);
-    });
-    return({defs: defs});
+    console.log("i am initial state", this);
+    return null;
   },
   getDB: function() {
     this.props.data.db.getDB();
   },
+  attack: function() {
+    var km1 = new KanjiMon(this.props.data.db.getKajisByReading("rain")[0]);
+    var km2 = new KanjiMon(this.props.data.db.getKajisByReading("sun")[0]);
+    this.props.data.attack(km1, km2);
+  },
   handleKanjiMonSearch: function(keyword) {
     console.log("i am handleKanjiMonSearch", keyword);
-    var defs;
-
-    // is this a kanji or an english word?
-    var re = /[a-z]/i;
-    if(keyword.match(re)) {
-      //get kanjis
-      defs = this.props.data.db.getKajisByReading(keyword).map(function(def){
-        return new KanjiMon(def);
-      });
-      console.log("kanjis", defs);
-      if(typeof defs == "object") { //TODO: check this is a valid KanjiMon
-        this.setState({defs: defs});
-      }
-    } else {
-      //assume is kanji
-      //TODO: test for kanji and fail gracefully
-      try {
-        defs = [new KanjiMon( this.props.data.db.getRecordByCharacter(keyword.substr(0,1)) )];　// render expects an array
-      } catch(e) {
-        console.log("kanji not found", keyword);
-      }
-      console.log("kanjis", defs);
-      if(typeof defs == "object") { //TODO: check this is a valid KanjiMon
-        this.setState({defs: defs});
-      }
-    }
-
+    browserHistory.push('/search/' + keyword);
+    // var defs = this.db.search(keyword);
+    // if(typeof defs == "object") { //TODO: check this is a valid KanjiMon
+    //   this.setState({defs: defs});
+    // }
   },
 
   rawMarkup: function() {
@@ -147,18 +109,25 @@ var UIKanjiMon = React.createClass({
     return { __html: rawMarkup };
   },
   render: function() {
-    return (
-      <div clasName="kanjimon" url="/client/db/kanjidic2.json">
-        <UISearchBox
-          onKanjiMonSearch={this.handleKanjiMonSearch}
-          onGetDB={this.getDB}
-          />
-        <UIDefList data={this.state.defs} />
-        <div className="about">
-          <div className="version">Version {this.props.version}</div>
+    if(!this.state) {
+      return <div>loading loading loading...</div>
+    } else {
+      return (
+        <div clasName="kanjimon" url="/client/db/kanjidic2.json">
+          <UISearchBox
+            onKanjiMonSearch={this.handleKanjiMonSearch}
+            onGetDB={this.getDB}
+            />
+          <div className="defListWrapper">
+           {(this.props.children  && React.cloneElement(this.props.children, {data: {defs: this.state.defs, db: this.state.db}}) ) || "nada"}</div>
+          <div className="about">
+            <div className="version">Version {this.props.version}</div>
+          </div>
+          <UIBattle onAttack={this.attack} />
+
         </div>
-      </div>
-    );
+      );
+    }
   }
 });
 

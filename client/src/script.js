@@ -1,74 +1,57 @@
 // script.js
 var React = require('react');
 var ReactDOM = require('react-dom');
-require('fetch-polyfill');
 
+// import Router from 'react-router';
+// import { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
+var Router = require('react-router').Router;
+var Route = require('react-router').Route;
+var Link = require('react-router').Link;
+var browserHistory = require('react-router').browserHistory;
+
+require('fetch-polyfill');
 require("babel-register");
 var KanjiMon = require('./kanjimon.class.js');
+var UIKanjiMon = require('./ui.class.js');
+var UIDefList = require('./ui/uideflist.class.js');
 var App = require('./app.class.js');
 var DB = require('./db.class.js');
 var dict;
 
 // Checking if service worker is registered. If it's not, register it
 // and reload the page to be sure the client is under service worker's control.
-navigator.serviceWorker.getRegistration().then(function(registration) {
-  if (!registration || !navigator.serviceWorker.controller) {
-    navigator.serviceWorker.register('/serviceWorker.js').then(function() {
-      console.log('Service worker registered, reloading the page');
-      //window.location.reload();
-    });
-  } else {
-    console.log('DEBUG: client is under the control of service worker');
-    proceed();
-  }
-});
+// navigator.serviceWorker.getRegistration().then(function(registration) {
+//   if (!registration || !navigator.serviceWorker.controller) {
+//     navigator.serviceWorker.register('/serviceWorker.js').then(function() {
+//       console.log('Service worker registered, reloading the page');
+//     });
+//   } else {
+//     console.log('DEBUG: client is under the control of service worker');
+//     proceed();
+//   }
+// });
 
-function proceed() {
-  console.log("fuuuuuu");
-}
+function initRoute(app){
+  console.log("i am initRoute", app);
 
-function findByKanji(kanji) {
-  var def = dict.kanjidic2.character.find(
-    function(ele, index, array) {
-      if(ele.literal == kanji) {
-        console.log(ele, index);
-        return true;
-      } else {
-        return false;
-      }
-    }
+  ReactDOM.render((
+    <Router history={browserHistory}>
+      <Route path="/" component={App} >
+        <Route path="km" component={UIKanjiMon}>
+          <Route path="/search/:key" component={UIDefList} />
+        </Route>
+      </Route>
+    </Router>
+    ), document.getElementById('drop')
   );
-
-  var km = new KanjiMon(def);
-  console.log("km:", km.getLiteral());
-  return km;
 }
 
 function init() {
-  fetch('/client/db/kanjidic2.json')
-  .then(function(response){
-    return response.json();
-  })
-  .then(function(json){
-    dict = json;
-    document.getElementById("drop").innerHTML = "done!";
-    return dict;
-  }).then(function(dict){
-    var db = new DB(dict.kanjidic2.character);
-    var app = new App(db);
-    app.init();
+    var app = new App();
+    initRoute(app);
 
-  });
+    //var battle = db.newBattle();
+    //battle.attack();
 }
 
 init();
-
-var httpRequest = new XMLHttpRequest();
-httpRequest.onreadystatechange = function(){
-  // process the server response
-  console.log("stuff responded");
-};
-window.setTimeout(function(){
-  httpRequest.open('GET', '/client/db/kanjidic2.json', true);
-  fetch('/client/db/kanjidic2.json').then(function(res){console.log("derp");});
-}, 2000);

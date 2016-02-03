@@ -1,22 +1,24 @@
 var KanjiMon = require('./kanjimon.class.js');
+var KMBattle = require('./kmbattle.class.js');
+
 
 var DB = class DB {
-  constructor(db) {
-    this.db = db;
+  constructor() {
+    this.db = {}; // = db;
+
+    this.battles = [];
   }
 
   getDB(url) {
     var db = this;
-    fetch('/client/db/kanjidic2.json')
+    return fetch(url)
     .then(function(response){
       var dict = response.json();
       return dict;
     })
     .then(function(dict){
       db.db = dict.kanjidic2.character;
-    })
-    ;
-
+    });
   }
 
   getKanjisByJLPT(jlpt) {
@@ -62,6 +64,42 @@ var DB = class DB {
     );
     return results;
   }
+
+  newBattle() {
+    var battle = new KMBattle(
+      new KanjiMon(this.getRecordByCharacter("雨")),
+      new KanjiMon(this.getRecordByCharacter("服"))
+    );
+    this.battles.push(battle);
+    return battle;
+  }
+
+  search(keyword) {
+
+    var defs;
+
+    // is this a kanji or an english word?
+    var re = /[a-z]/i;
+    if(keyword.match(re)) {
+      //get kanjis
+      defs = this.getKajisByReading(keyword).map(function(def){
+        return new KanjiMon(def);
+      });
+      console.log("kanjis", defs);
+    } else {
+      //assume is kanji
+      //TODO: test for kanji and fail gracefully
+      try {
+        defs = [new KanjiMon( this.getRecordByCharacter(keyword.substr(0,1)) )];　// render expects an array
+      } catch(e) {
+        console.log("kanji not found", keyword, e);
+      }
+      console.log("kanjis", defs);
+    }
+
+    return defs;
+  }
+
 
 
 };

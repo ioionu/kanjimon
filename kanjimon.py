@@ -21,4 +21,20 @@ def send_static():
 def index(name):
     return template('templates/hello', name=name)
 
+@route('/')
+def index():
+    name = "waqeqer"
+    return template('templates/hello', name=name)
+
+@route('/km')
+def index():
+    name = "waqeqer"
+    return template('templates/hello', name=name)
+
+@route('/search/<name>')
+def index(name):
+    name = "waqeqer"
+    return template('templates/hello', name=name)
+
+
 run(host='localhost', port=8080)
