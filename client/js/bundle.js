@@ -25551,7 +25551,11 @@ var App = React.createClass({
     return React.createElement(
       'div',
       { className: 'app' },
-      this.props.children
+      this.props.children && React.cloneElement(this.props.children, { data: { version: '0.1' } }) || React.createElement(
+        'div',
+        null,
+        'search'
+      )
     );
   }
 });
@@ -25850,6 +25854,8 @@ require("babel-register");
 var KanjiMon = require('./kanjimon.class.js');
 var UIKanjiMon = require('./ui.class.js');
 var UIDefList = require('./ui/uideflist.class.js');
+var UIDefBox = require('./ui/uidefbox.class.js');
+
 var App = require('./app.class.js');
 var DB = require('./db.class.js');
 var dict;
@@ -25875,12 +25881,9 @@ function initRoute(app) {
     { history: browserHistory },
     React.createElement(
       Route,
-      { path: '/', component: App },
-      React.createElement(
-        Route,
-        { path: 'km', component: UIKanjiMon },
-        React.createElement(Route, { path: '/search/:key', component: UIDefList })
-      )
+      { path: '/', component: UIKanjiMon },
+      React.createElement(Route, { path: '/search/:key', component: UIDefList }),
+      React.createElement(Route, { path: '/kanji/:key', component: UIDefBox })
     )
   ), document.getElementById('drop'));
 }
@@ -25895,7 +25898,7 @@ function init() {
 
 init();
 
-},{"./app.class.js":220,"./db.class.js":221,"./kanjimon.class.js":222,"./ui.class.js":225,"./ui/uideflist.class.js":226,"babel-register":1,"fetch-polyfill":30,"react":219,"react-dom":33,"react-router":61}],225:[function(require,module,exports){
+},{"./app.class.js":220,"./db.class.js":221,"./kanjimon.class.js":222,"./ui.class.js":225,"./ui/uidefbox.class.js":226,"./ui/uideflist.class.js":227,"babel-register":1,"fetch-polyfill":30,"react":219,"react-dom":33,"react-router":61}],225:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -26006,17 +26009,8 @@ var UIKanjiMon = React.createClass({
   handleKanjiMonSearch: function handleKanjiMonSearch(keyword) {
     console.log("i am handleKanjiMonSearch", keyword);
     browserHistory.push('/search/' + keyword);
-    // var defs = this.db.search(keyword);
-    // if(typeof defs == "object") { //TODO: check this is a valid KanjiMon
-    //   this.setState({defs: defs});
-    // }
   },
 
-  rawMarkup: function rawMarkup() {
-    //var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
-    var rawMarkup = "<blink>yo!</blink>";
-    return { __html: rawMarkup };
-  },
   render: function render() {
     if (!this.state) {
       return React.createElement(
@@ -26046,8 +26040,7 @@ var UIKanjiMon = React.createClass({
             'Version ',
             this.props.version
           )
-        ),
-        React.createElement(UIBattle, { onAttack: this.attack })
+        )
       );
     }
   }
@@ -26055,45 +26048,10 @@ var UIKanjiMon = React.createClass({
 
 module.exports = UIKanjiMon;
 
-},{"./db.class.js":221,"./kanjimon.class.js":222,"./ui/uideflist.class.js":226,"marked":32,"react":219,"react-router":61}],226:[function(require,module,exports){
+},{"./db.class.js":221,"./kanjimon.class.js":222,"./ui/uideflist.class.js":227,"marked":32,"react":219,"react-router":61}],226:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
-
-var UIDefList = React.createClass({
-  displayName: "UIDefList",
-
-  componentDidMount: function componentDidMount() {
-    var keyword = this.props.params.key;
-    console.log("i am UIDefList mount", keyword);
-    var defs = this.props.data.db.search(keyword);
-    this.setState({ defs: defs });
-  },
-  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-    var keyword = nextProps.params.key;
-    console.log("updating props", nextProps, keyword);
-    var defs = this.props.data.db.search(keyword);
-    this.setState({ defs: defs });
-  },
-  render: function render() {
-    if (!this.state) {
-      return React.createElement(
-        "div",
-        null,
-        "thinking thinking thinking...."
-      );
-    } else {
-      var defNodes = this.state.defs.map(function (def) {
-        return React.createElement(UIDefBox, { key: def.kanji.key, data: def });
-      });
-      return React.createElement(
-        "div",
-        { className: "defList" },
-        defNodes
-      );
-    }
-  }
-});
 
 var UIDefBox = React.createClass({
   displayName: "UIDefBox",
@@ -26183,10 +26141,52 @@ var UIDefBox = React.createClass({
     );
   }
 });
+module.exports = UIDefBox;
+
+},{"react":219}],227:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var UIDefBox = require('./uidefbox.class.js');
+
+var UIDefList = React.createClass({
+  displayName: 'UIDefList',
+
+  componentDidMount: function componentDidMount() {
+    var keyword = this.props.params.key;
+    console.log("i am UIDefList mount", keyword);
+    var defs = this.props.data.db.search(keyword);
+    this.setState({ defs: defs });
+  },
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+    var keyword = nextProps.params.key;
+    console.log("updating props", nextProps, keyword);
+    var defs = this.props.data.db.search(keyword);
+    this.setState({ defs: defs });
+  },
+  render: function render() {
+    if (!this.state) {
+      return React.createElement(
+        'div',
+        null,
+        'thinking thinking thinking....'
+      );
+    } else {
+      var defNodes = this.state.defs.map(function (def) {
+        return React.createElement(UIDefBox, { key: def.kanji.key, data: def });
+      });
+      return React.createElement(
+        'div',
+        { className: 'defList' },
+        defNodes
+      );
+    }
+  }
+});
 
 module.exports = UIDefList;
 
-},{"react":219}]},{},[224])
+},{"./uidefbox.class.js":226,"react":219}]},{},[224])
 
 
 //# sourceMappingURL=bundle.js.map

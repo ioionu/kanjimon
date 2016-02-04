@@ -13,7 +13,11 @@ var App = React.createClass({
     console.log("rndering app");
     return(
       <div className="app">
-        {this.props.children}
+        {
+          this.props.children
+          && React.cloneElement(this.props.children, {data: {version: '0.1'}})
+          || <div>search</div>
+        }
       </div>
     )
   }

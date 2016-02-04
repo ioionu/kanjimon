@@ -97,17 +97,8 @@ var UIKanjiMon = React.createClass({
   handleKanjiMonSearch: function(keyword) {
     console.log("i am handleKanjiMonSearch", keyword);
     browserHistory.push('/search/' + keyword);
-    // var defs = this.db.search(keyword);
-    // if(typeof defs == "object") { //TODO: check this is a valid KanjiMon
-    //   this.setState({defs: defs});
-    // }
   },
 
-  rawMarkup: function() {
-    //var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
-    var rawMarkup = "<blink>yo!</blink>"
-    return { __html: rawMarkup };
-  },
   render: function() {
     if(!this.state) {
       return <div>loading loading loading...</div>
@@ -123,8 +114,6 @@ var UIKanjiMon = React.createClass({
           <div className="about">
             <div className="version">Version {this.props.version}</div>
           </div>
-          <UIBattle onAttack={this.attack} />
-
         </div>
       );
     }

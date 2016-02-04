@@ -99,10 +99,6 @@ var DB = class DB {
 
     return defs;
   }
-
-
-
 };
-
 
 module.exports = DB;

@@ -14,6 +14,8 @@ require("babel-register");
 var KanjiMon = require('./kanjimon.class.js');
 var UIKanjiMon = require('./ui.class.js');
 var UIDefList = require('./ui/uideflist.class.js');
+var UIDefBox = require('./ui/uidefbox.class.js');
+
 var App = require('./app.class.js');
 var DB = require('./db.class.js');
 var dict;
@@ -36,11 +38,10 @@ function initRoute(app){
 
   ReactDOM.render((
     <Router history={browserHistory}>
-      <Route path="/" component={App} >
-        <Route path="km" component={UIKanjiMon}>
+        <Route path="/" component={UIKanjiMon}>
           <Route path="/search/:key" component={UIDefList} />
+          <Route path="/kanji/:key" component={UIDefBox} />
         </Route>
-      </Route>
     </Router>
     ), document.getElementById('drop')
   );
