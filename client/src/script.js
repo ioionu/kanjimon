@@ -22,16 +22,20 @@ var dict;
 
 // Checking if service worker is registered. If it's not, register it
 // and reload the page to be sure the client is under service worker's control.
-// navigator.serviceWorker.getRegistration().then(function(registration) {
-//   if (!registration || !navigator.serviceWorker.controller) {
-//     navigator.serviceWorker.register('/serviceWorker.js').then(function() {
-//       console.log('Service worker registered, reloading the page');
-//     });
-//   } else {
-//     console.log('DEBUG: client is under the control of service worker');
-//     proceed();
-//   }
-// });
+navigator.serviceWorker.getRegistration().then(function(registration) {
+  if (!registration || !navigator.serviceWorker.controller) {
+    navigator.serviceWorker.register('/serviceWorker.js').then(function() {
+      console.log('Service worker registered, reloading the page');
+    });
+  } else {
+    console.log('DEBUG: client is under the control of service worker');
+    proceed();
+  }
+});
+
+function proceed() {
+  console.log("do stuff with service worker");
+};
 
 function initRoute(app){
   console.log("i am initRoute", app);

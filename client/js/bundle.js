@@ -25862,16 +25862,20 @@ var dict;
 
 // Checking if service worker is registered. If it's not, register it
 // and reload the page to be sure the client is under service worker's control.
-// navigator.serviceWorker.getRegistration().then(function(registration) {
-//   if (!registration || !navigator.serviceWorker.controller) {
-//     navigator.serviceWorker.register('/serviceWorker.js').then(function() {
-//       console.log('Service worker registered, reloading the page');
-//     });
-//   } else {
-//     console.log('DEBUG: client is under the control of service worker');
-//     proceed();
-//   }
-// });
+navigator.serviceWorker.getRegistration().then(function (registration) {
+  if (!registration || !navigator.serviceWorker.controller) {
+    navigator.serviceWorker.register('/serviceWorker.js').then(function () {
+      console.log('Service worker registered, reloading the page');
+    });
+  } else {
+    console.log('DEBUG: client is under the control of service worker');
+    proceed();
+  }
+});
+
+function proceed() {
+  console.log("do stuff with service worker");
+};
 
 function initRoute(app) {
   console.log("i am initRoute", app);
@@ -25982,7 +25986,7 @@ var UIKanjiMon = React.createClass({
     console.log("i am mount");
     this.db = new DB();
     var _this = this; //TODO: make bind work with promise?
-    return _this.db.getDB('/client/db/kanjidic2.json').then(function () {
+    return _this.db.getDB('/db/kanjidic2.json').then(function () {
       var defs = _this.db.getKajisByReading("rain").map(function (def) {
         return new KanjiMon(def);
       });
@@ -26021,7 +26025,7 @@ var UIKanjiMon = React.createClass({
     } else {
       return React.createElement(
         'div',
-        { clasName: 'kanjimon', url: '/client/db/kanjidic2.json' },
+        { clasName: 'kanjimon', url: '/db/kanjidic2.json' },
         React.createElement(UISearchBox, {
           onKanjiMonSearch: this.handleKanjiMonSearch,
           onGetDB: this.getDB

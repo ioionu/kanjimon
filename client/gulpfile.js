@@ -19,7 +19,7 @@ function compile(watch) {
       .pipe(gulp.dest('./js'));
 
     gulp.src(['./src/serviceWorker.js'])
-      .pipe(gulp.dest('./js'))
+      .pipe(gulp.dest('./'))
     ;
   }
 

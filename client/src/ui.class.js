@@ -68,7 +68,7 @@ var UIKanjiMon = React.createClass({
     console.log("i am mount");
     this.db = new DB();
     var _this = this; //TODO: make bind work with promise?
-    return _this.db.getDB('/client/db/kanjidic2.json')
+    return _this.db.getDB('/db/kanjidic2.json')
     .then(function(){
       var defs = _this.db.getKajisByReading("rain").map(function(def){
         return new KanjiMon(def);
@@ -104,7 +104,7 @@ var UIKanjiMon = React.createClass({
       return <div>loading loading loading...</div>
     } else {
       return (
-        <div clasName="kanjimon" url="/client/db/kanjidic2.json">
+        <div clasName="kanjimon" url="/db/kanjidic2.json">
           <UISearchBox
             onKanjiMonSearch={this.handleKanjiMonSearch}
             onGetDB={this.getDB}
