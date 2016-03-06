@@ -11,8 +11,8 @@ var UIDefBox = React.createClass({
     var literal = char.getLiteral();
 
     return (
-      <div className="defBox">
-        <h2>{literal} : Definition</h2>
+      <section className="defBox">
+        <h2>{literal}</h2>
         <dl>
           <dt>Kanji</dt>
           <dd>{literal}</dd>
@@ -27,7 +27,7 @@ var UIDefBox = React.createClass({
           <dt>JLPT</dt>
           <dd>{jlpt}</dd>
         </dl>
-      </div>
+      </section>
     );
   }
 });

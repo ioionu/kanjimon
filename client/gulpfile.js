@@ -6,10 +6,20 @@ var browserify = require('browserify');
 var watchify = require('watchify');
 var babel = require('babelify');
 
+// style stuff
+var postcss = require('gulp-postcss');
+var autoprefixer = require('autoprefixer');
+var cssnext = require('cssnext');
+var precss = require('precss');
+var lost = require('lost');
+
+
 function compile(watch) {
   var bundler = watchify(browserify(['./src/script.js'], { debug: true }).transform(babel));
+  gulp.watch(['./css/*.css'], ['css']);
 
   function rebundle() {
+
     bundler.bundle()
       .on('error', function(err) { console.error(err); this.emit('end'); })
       .pipe(source('bundle.js'))
@@ -21,9 +31,11 @@ function compile(watch) {
     gulp.src(['./src/serviceWorker.js'])
       .pipe(gulp.dest('./'))
     ;
+    css();
   }
 
   if (watch) {
+
     bundler.on('update', function() {
       console.log('-> bundling...');
       rebundle();
@@ -32,17 +44,37 @@ function compile(watch) {
       console.log('-> bundling sw...');
       rebundle();
     });
-
+    // gulp.watch(['./css/*.css'], function() {
+    //   gulp.src('./css/*.css')
+    //     .pipe(postcss(processors))
+    //     .pipe(gulp.dest('./build/css/'));
+    //   rebundle();
+    // });
   }
 
   rebundle();
 }
 
+function css() {
+  console.log('-> bundling css...');
+  var processors = [
+    autoprefixer,
+    cssnext,
+    precss,
+    lost(),
+  ];
+  return gulp.src('./css/*.css')
+    .pipe(postcss(processors))
+    .pipe(gulp.dest('./build/css/'));
+}
+
+
 function watch() {
   return compile(true);
 }
 
+gulp.task('css', function () { return css(); });
 gulp.task('build', function() { return compile(); });
 gulp.task('watch', function() { return watch(); });
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['watch', 'css']);

@@ -7,7 +7,7 @@ var ReactDOM = require('react-dom');
 var Router = require('react-router').Router;
 var Route = require('react-router').Route;
 var Link = require('react-router').Link;
-var browserHistory = require('react-router').browserHistory;
+var history = require('react-router').hashHistory; //browserHistory;
 
 require('fetch-polyfill');
 require("babel-register");
@@ -41,7 +41,7 @@ function initRoute(app){
   console.log("i am initRoute", app);
 
   ReactDOM.render((
-    <Router history={browserHistory}>
+    <Router history={history}>
         <Route path="/" component={UIKanjiMon}>
           <Route path="/search/:key" component={UIDefList} />
           <Route path="/kanji/:key" component={UIDefBox} />

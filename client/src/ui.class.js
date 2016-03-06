@@ -1,6 +1,6 @@
 var React = require('react');
 var marked = require('marked');
-var browserHistory = require('react-router').browserHistory;
+var browserHistory = require('react-router').hashHistory; //browserHistory;
 
 
 var DB = require('./db.class.js');
@@ -31,7 +31,7 @@ var UISearchBox = React.createClass({
   },
   render: function() {
     return (
-      <div>
+      <div className="searchBox">
         <form className="search" onSubmit={this.handleSearch}>
           <input
             name="char"
@@ -41,7 +41,7 @@ var UISearchBox = React.createClass({
             />
           <input
             type="submit"
-            value="捜"
+            value="Σ(O_O) 検索"
             />
         </form>
       </div>
@@ -104,7 +104,7 @@ var UIKanjiMon = React.createClass({
       return <div>loading loading loading...</div>
     } else {
       return (
-        <div clasName="kanjimon" url="/db/kanjidic2.json">
+        <div className="kanjimon" url="/db/kanjidic2.json">
           <UISearchBox
             onKanjiMonSearch={this.handleKanjiMonSearch}
             onGetDB={this.getDB}
