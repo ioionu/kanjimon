@@ -1,12 +1,56 @@
 @lost flexbox flex;
 
 body {
-  background-color: yellow;
+  background-color: purple;
+  font-family: sans-serif;
+  color: white;
+  padding: 1em;
+}
+
+a:link,
+a:visited
+{
+  color:violet;
+}
+
+form.search {
+  max-width: 980px;
+  display: flex;
+  padding: 1em 0;
+  border-width: 1px 0;
+  border-style: solid;
+  border-color: white;
+
+  & input.char
+  {
+    flex-grow: 1;
+    background: transparent;
+    border: 1px solid violet;
+    color: white;
+  }
+
+  input.button
+  {
+    background: transparent;
+    border: 1px solid violet;
+    color: white;
+    margin-left: 1em;
+  }
 }
 
 section {
   lost-center: 980px;
-  & div {
+  border-bottom: 1px solid violet
+  ;
+
+  & h2 {
     lost-column: 1/3;
+    font-size-adjust: 2;
+    font-weight: normal;
+    text-align: center;
+  }
+
+  dl {
+    lost-column: 2/3;
   }
 }

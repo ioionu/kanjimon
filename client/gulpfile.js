@@ -44,12 +44,6 @@ function compile(watch) {
       console.log('-> bundling sw...');
       rebundle();
     });
-    // gulp.watch(['./css/*.css'], function() {
-    //   gulp.src('./css/*.css')
-    //     .pipe(postcss(processors))
-    //     .pipe(gulp.dest('./build/css/'));
-    //   rebundle();
-    // });
   }
 
   rebundle();
@@ -63,7 +57,7 @@ function css() {
     precss,
     lost(),
   ];
-  return gulp.src('./css/*.css')
+  return gulp.src(['./css/*.css'])
     .pipe(postcss(processors))
     .pipe(gulp.dest('./build/css/'));
 }

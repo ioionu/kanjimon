@@ -1,5 +1,6 @@
 var CACHE_NAME = 'cache-v1.1';
-var cache_files = ['/', '/db/kanjidic2.json', '/js/bundle.js'];
+var cache_files = ['/', '/db/kanjidic2.json', '/js/bundle.js', '/build/css/style.css'];
+cache_files = [];
 
 self.addEventListener('fetch', function(event) {
   console.log("fetch!");

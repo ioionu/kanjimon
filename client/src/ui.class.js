@@ -36,12 +36,14 @@ var UISearchBox = React.createClass({
           <input
             name="char"
             type="text"
-            placeholder="search me"
+            placeholder="Search by kanji or english"
             onChange={this.handleCharChange}
+            className="char"
             />
           <input
             type="submit"
             value="Σ(O_O) 検索"
+            className="button"
             />
         </form>
       </div>
@@ -112,7 +114,7 @@ var UIKanjiMon = React.createClass({
           <div className="defListWrapper">
            {(this.props.children  && React.cloneElement(this.props.children, {data: {defs: this.state.defs, db: this.state.db}}) ) || "nada"}</div>
           <div className="about">
-            <div className="version">Version {this.props.version}</div>
+            Under Construction : Copyright 2016 Joshua McCluskey : Fork me on github <a href="https://github.com/ioionu/kanjimon">https://github.com/ioionu/kanjimon</a> : Based on edict
           </div>
         </div>
       );
