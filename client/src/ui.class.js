@@ -103,7 +103,7 @@ var UIKanjiMon = React.createClass({
 
   render: function() {
     if(!this.state) {
-      return <div>loading loading loading...</div>
+      return <div>loading loading loading... kanji db is big, should take a few seconds.</div>
     } else {
       return (
         <div className="kanjimon" url="/db/kanjidic2.json">

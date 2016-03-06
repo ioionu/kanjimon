@@ -26136,7 +26136,7 @@ var UIKanjiMon = React.createClass({
       return React.createElement(
         'div',
         null,
-        'loading loading loading...'
+        'loading loading loading... kanji db is big, should take a few seconds.'
       );
     } else {
       return React.createElement(

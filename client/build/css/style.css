@@ -11,7 +11,11 @@ a:link, a:visited
 }
 
 form.search {
+  display: flex;
+  flex-flow: row wrap;
   max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -93,4 +97,14 @@ section h2:nth-child(3n) {
 
 section h2:nth-child(3n) {
   margin-right: 0;
+}
+
+.about
+{
+  margin-top: 1em;
+  display: flex;
+  flex-flow: row wrap;
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
 }

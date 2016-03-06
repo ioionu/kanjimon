@@ -14,7 +14,7 @@ a:visited
 }
 
 form.search {
-  max-width: 980px;
+  lost-center: 980px;
   display: flex;
   padding: 1em 0;
   border-width: 1px 0;
@@ -53,4 +53,10 @@ section {
   dl {
     lost-column: 2/3;
   }
+}
+
+.about
+{
+  margin-top: 1em;
+  lost-center: 980px;
 }

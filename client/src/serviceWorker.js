@@ -1,4 +1,4 @@
-var CACHE_NAME = 'cache-v1.2';
+var CACHE_NAME = 'cache-v1.2.1';
 var cache_files = ['/', '/db/kanjidic2.json', '/js/bundle.js', '/build/css/style.css'];
 //cache_files = [];
 
