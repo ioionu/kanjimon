@@ -12,6 +12,7 @@
     "material-design-lite": "^1.1.2",
     "react-router": "^2.0.0-rc5",
     "serviceworker-cache-polyfill": "^3.0.0",
+    "sw-toolbox": "^3.1.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "whatwg-fetch": "^0.10.1"

@@ -1,16 +1,16 @@
 @lost flexbox flex;
 
 body {
-  background-color: purple;
+  background-color: white;
   font-family: sans-serif;
-  color: white;
+  color: black;
   padding: 1em;
 }
 
 a:link,
 a:visited
 {
-  color:violet;
+  color:gray;
 }
 
 form.search {
@@ -19,29 +19,30 @@ form.search {
   padding: 1em 0;
   border-width: 1px 0;
   border-style: solid;
-  border-color: white;
+  border-color: gray;
 
   & input.char
   {
     flex-grow: 1;
     background: transparent;
-    border: 1px solid violet;
-    color: white;
+    border: 1px solid gray;
+    color: black;
   }
 
   input.button
   {
     background: transparent;
-    border: 1px solid violet;
-    color: white;
+    border: 1px solid gray;
+    color: black;
     margin-left: 1em;
   }
 }
+.defListWrapper{
+  lost-center: 980px;
+}
 
 section {
-  lost-center: 980px;
-  border-bottom: 1px solid violet
-  ;
+  border-bottom: 1px solid gray;
 
   & h2 {
     lost-column: 1/3;

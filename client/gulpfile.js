@@ -62,6 +62,12 @@ function css() {
     .pipe(gulp.dest('./build/css/'));
 }
 
+function libs() {
+  console.log("copying some stuff");
+  return gulp.src(['./node_modules/sw-toolbox/sw-toolbox.js'])
+   .pipe(gulp.dest('./build/js/'));
+}
+
 
 function watch() {
   return compile(true);
@@ -70,5 +76,6 @@ function watch() {
 gulp.task('css', function () { return css(); });
 gulp.task('build', function() { return compile(); });
 gulp.task('watch', function() { return watch(); });
+gulp.task('libs', function() { return libs(); });
 
-gulp.task('default', ['watch', 'css']);
+gulp.task('default', ['watch', 'css', 'libs']);

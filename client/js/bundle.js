@@ -25989,7 +25989,7 @@ if (navigator.serviceWorker) {
 
 function proceed() {
   console.log("do stuff with service worker");
-};
+}
 
 function initRoute(app) {
   console.log("i am initRoute", app);

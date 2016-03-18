@@ -1,6 +1,7 @@
 env/
 client/node_modules
 client/db
+client/build
 *.map
 *.log
 
