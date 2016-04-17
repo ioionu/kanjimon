@@ -1,3 +1,4 @@
+var KanjiFavourite = require("./kanjifavourite.class.js");
 var KanjiMon = class KanjiMon {
   constructor(kanji) {
     if(typeof kanji == 'undefined') {
@@ -5,6 +6,8 @@ var KanjiMon = class KanjiMon {
     }
     this.kanji = kanji;
     this.kanji.key = this.kanji.literal;
+    this.favourite = new KanjiFavourite( this );
+
     //  console.log("i am kanji");
   }
 
@@ -65,6 +68,14 @@ var KanjiMon = class KanjiMon {
     if (typeof this.kanji.misc.jlpt == 'string') {
       return this.kanji.misc.jlpt;
     }
+  }
+
+  toggleFavourite() {
+    this.favourite.toggle();
+  }
+
+  isFavourite() {
+    return this.favourite.isFavourite();
   }
 
 };

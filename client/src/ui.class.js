@@ -112,7 +112,7 @@ var UIKanjiMon = React.createClass({
             onGetDB={this.getDB}
             />
           <div className="defListWrapper">
-           {(this.props.children  && React.cloneElement(this.props.children, {data: {defs: this.state.defs, db: this.state.db}}) ) || "nada"}</div>
+           {(this.props.children && React.cloneElement(this.props.children, {data: {defs: this.state.defs, db: this.state.db}}) ) || "Try the search box :D"}</div>
           <div className="about">
             Under Construction : Copyright 2016 Joshua McCluskey : Fork me on github <a href="https://github.com/ioionu/kanjimon">https://github.com/ioionu/kanjimon</a> : Based on edict
           </div>

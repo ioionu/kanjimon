@@ -61,3 +61,13 @@ section {
   margin-top: 1em;
   lost-center: 980px;
 }
+
+.favourite-button
+{
+  background-color: white;
+}
+
+.favourite-button.is-favourite
+{
+  background-color: yellow;
+}

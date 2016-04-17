@@ -1,6 +1,11 @@
 var React = require('react');
+var classNames = require('classnames');
 
 var UIDefBox = React.createClass({
+  toggleFavourite: function(e) {
+    this.props.data.toggleFavourite();
+    this.forceUpdate();
+  },
   render: function() {
     console.log("i am def render", this.props);
     var char = this.props.data; //new KanjiMon( this.props.data.db.getRecordByCharacter(this.props.data.char) );
@@ -9,6 +14,10 @@ var UIDefBox = React.createClass({
     var stroke_count = char.getStrokeCount();
     var jlpt = char.getJLPT();
     var literal = char.getLiteral();
+    var favouriteClass = classNames({
+      "favourite-button": true,
+      "is-favourite": char.isFavourite()
+    });
 
     return (
       <section className="defBox">
@@ -27,6 +36,7 @@ var UIDefBox = React.createClass({
           <dt>JLPT</dt>
           <dd>{jlpt}</dd>
         </dl>
+        <button onClick={this.toggleFavourite} className={ favouriteClass }>Fav</button>
       </section>
     );
   }
