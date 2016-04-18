@@ -1,5 +1,5 @@
 if(true) {
-  var CACHE_NAME = 'cache-v1.3.0';
+  var CACHE_NAME = 'cache-v1.4.0';
 
   importScripts('build/js/sw-toolbox.js');
 
