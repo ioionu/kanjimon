@@ -18,8 +18,10 @@ var UISearchBox = React.createClass({
   },
   handleSearch: function (e) {
     e.preventDefault();
-    var kanji = this.state.keyword;
-    this.props.onKanjiMonSearch(kanji);
+    if(this.state.keyword !== null) {
+      var kanji = this.state.keyword;
+      this.props.onKanjiMonSearch(kanji);
+    }
   },
   handleCharChange: function (e) {
     if (e.target.value.length > 0) {
@@ -28,6 +30,10 @@ var UISearchBox = React.createClass({
       var keyword = e.target.value.trim();
       this.setState({char: char, keyword:keyword});
     }
+  },
+  handleShowFavourites: function(e) {
+    e.preventDefault();
+    this.props.onShowFavourites();
   },
   render: function() {
     return (
@@ -45,6 +51,10 @@ var UISearchBox = React.createClass({
             value="Σ(O_O) 検索"
             className="button"
             />
+          <button
+            className="showFavourites"
+            onClick={this.handleShowFavourites}
+            >Fav</button>
         </form>
       </div>
     );
@@ -100,6 +110,9 @@ var UIKanjiMon = React.createClass({
     console.log("i am handleKanjiMonSearch", keyword);
     browserHistory.push('/search/' + keyword);
   },
+  handleShowFavourites: function() {
+    browserHistory.push('/favourites');
+  },
 
   render: function() {
     if(!this.state) {
@@ -109,6 +122,7 @@ var UIKanjiMon = React.createClass({
         <div className="kanjimon" url="/db/kanjidic2.json">
           <UISearchBox
             onKanjiMonSearch={this.handleKanjiMonSearch}
+            onShowFavourites={this.handleShowFavourites}
             onGetDB={this.getDB}
             />
           <div className="defListWrapper">

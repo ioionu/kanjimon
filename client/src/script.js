@@ -14,6 +14,7 @@ require("babel-register");
 var KanjiMon = require('./kanjimon.class.js');
 var UIKanjiMon = require('./ui.class.js');
 var UIDefList = require('./ui/uideflist.class.js');
+var UIFavouriteList = require('./ui/uifavouritelist.class.js');
 var UIDefBox = require('./ui/uidefbox.class.js');
 
 var App = require('./app.class.js');
@@ -47,6 +48,7 @@ function initRoute(app){
         <Route path="/" component={UIKanjiMon}>
           <Route path="/search/:key" component={UIDefList} />
           <Route path="/kanji/:key" component={UIDefBox} />
+          <Route path="/favourites" component={UIFavouriteList} />
         </Route>
     </Router>
     ), document.getElementById('drop')

@@ -26107,6 +26107,7 @@ require("babel-register");
 var KanjiMon = require('./kanjimon.class.js');
 var UIKanjiMon = require('./ui.class.js');
 var UIDefList = require('./ui/uideflist.class.js');
+var UIFavouriteList = require('./ui/uifavouritelist.class.js');
 var UIDefBox = require('./ui/uidefbox.class.js');
 
 var App = require('./app.class.js');
@@ -26142,7 +26143,8 @@ function initRoute(app) {
       Route,
       { path: '/', component: UIKanjiMon },
       React.createElement(Route, { path: '/search/:key', component: UIDefList }),
-      React.createElement(Route, { path: '/kanji/:key', component: UIDefBox })
+      React.createElement(Route, { path: '/kanji/:key', component: UIDefBox }),
+      React.createElement(Route, { path: '/favourites', component: UIFavouriteList })
     )
   ), document.getElementById('drop'));
 }
@@ -26157,7 +26159,7 @@ function init() {
 
 init();
 
-},{"./app.class.js":220,"./db.class.js":221,"./kanjimon.class.js":223,"./ui.class.js":226,"./ui/uidefbox.class.js":227,"./ui/uideflist.class.js":228,"babel-register":1,"fetch-polyfill":4,"react":219,"react-dom":6,"react-router":34}],226:[function(require,module,exports){
+},{"./app.class.js":220,"./db.class.js":221,"./kanjimon.class.js":223,"./ui.class.js":226,"./ui/uidefbox.class.js":227,"./ui/uideflist.class.js":228,"./ui/uifavouritelist.class.js":229,"babel-register":1,"fetch-polyfill":4,"react":219,"react-dom":6,"react-router":34}],226:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -26181,8 +26183,10 @@ var UISearchBox = React.createClass({
   },
   handleSearch: function handleSearch(e) {
     e.preventDefault();
-    var kanji = this.state.keyword;
-    this.props.onKanjiMonSearch(kanji);
+    if (this.state.keyword !== null) {
+      var kanji = this.state.keyword;
+      this.props.onKanjiMonSearch(kanji);
+    }
   },
   handleCharChange: function handleCharChange(e) {
     if (e.target.value.length > 0) {
@@ -26191,6 +26195,10 @@ var UISearchBox = React.createClass({
       var keyword = e.target.value.trim();
       this.setState({ char: char, keyword: keyword });
     }
+  },
+  handleShowFavourites: function handleShowFavourites(e) {
+    e.preventDefault();
+    this.props.onShowFavourites();
   },
   render: function render() {
     return React.createElement(
@@ -26210,7 +26218,15 @@ var UISearchBox = React.createClass({
           type: 'submit',
           value: 'Σ(O_O) 検索',
           className: 'button'
-        })
+        }),
+        React.createElement(
+          'button',
+          {
+            className: 'showFavourites',
+            onClick: this.handleShowFavourites
+          },
+          'Fav'
+        )
       )
     );
   }
@@ -26271,6 +26287,9 @@ var UIKanjiMon = React.createClass({
     console.log("i am handleKanjiMonSearch", keyword);
     browserHistory.push('/search/' + keyword);
   },
+  handleShowFavourites: function handleShowFavourites() {
+    browserHistory.push('/favourites');
+  },
 
   render: function render() {
     if (!this.state) {
@@ -26285,6 +26304,7 @@ var UIKanjiMon = React.createClass({
         { className: 'kanjimon', url: '/db/kanjidic2.json' },
         React.createElement(UISearchBox, {
           onKanjiMonSearch: this.handleKanjiMonSearch,
+          onShowFavourites: this.handleShowFavourites,
           onGetDB: this.getDB
         }),
         React.createElement(
@@ -26461,7 +26481,56 @@ var UIDefList = React.createClass({
 
 module.exports = UIDefList;
 
-},{"./uidefbox.class.js":227,"react":219}]},{},[225])
+},{"./uidefbox.class.js":227,"react":219}],229:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var UIDefBox = require('./uidefbox.class.js');
+var KanjiFavourite = require('../kanjifavourite.class.js');
+
+var UIFavouriteList = React.createClass({
+  displayName: 'UIFavouriteList',
+
+  componentDidMount: function componentDidMount() {
+    var _this = this;
+
+    console.log("i am UIFavouritesList mount");
+    var kf = new KanjiFavourite();
+    var favourites = kf.loadFavourites().map(function (favourite) {
+      return _this.props.data.db.search(favourite)[0];
+    });
+
+    this.setState({ favourites: favourites });
+  },
+  // componentWillReceiveProps: function(nextProps) {
+  //   var keyword = nextProps.params.key;
+  //   console.log("updating props", nextProps, keyword);
+  //   var defs = this.props.data.db.search(keyword);
+  //   this.setState({defs:defs});
+  // },
+  render: function render() {
+    if (!this.state) {
+      return React.createElement(
+        'div',
+        null,
+        'thinking thinking thinking....'
+      );
+    } else {
+      var favouriteNodes = this.state.favourites.map(function (favourite) {
+        return React.createElement(UIDefBox, { key: favourite.kanji.key, data: favourite });
+      });
+      return React.createElement(
+        'div',
+        { className: 'defList favourite-list' },
+        favouriteNodes
+      );
+    }
+  }
+});
+
+module.exports = UIFavouriteList;
+
+},{"../kanjifavourite.class.js":222,"./uidefbox.class.js":227,"react":219}]},{},[225])
 
 
 //# sourceMappingURL=bundle.js.map
