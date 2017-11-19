@@ -7,7 +7,7 @@ def send_static(filename):
     f.set_header('Service-Worker-Allowed', '/')
     return f
 
-@route('/client/db/<filename:path>')
+@route('/db/<filename:path>')
 def send_static(filename):
     return static_file(filename, root='/home/gamera/code/kanjimon/client/db')
 
