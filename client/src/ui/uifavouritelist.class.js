@@ -1,9 +1,10 @@
-var React = require('react');
-var UIDefBox = require('./uidefbox.class.js');
-var KanjiFavourite = require('../kanjifavourite.class.js');
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import UIDefBox from './uidefbox.class.js';
+import KanjiFavourite from '../kanjifavourite.class.js';
 
-var UIFavouriteList = React.createClass({
-  componentDidMount: function() {
+class UIFavouriteList extends Component {
+  componentDidMount() {
     console.log("i am UIFavouritesList mount");
     var kf = new KanjiFavourite();
     var favourites = kf.loadFavourites().map(
@@ -13,14 +14,14 @@ var UIFavouriteList = React.createClass({
     );
 
     this.setState({favourites: favourites});
-  },
+  }
   // componentWillReceiveProps: function(nextProps) {
   //   var keyword = nextProps.params.key;
   //   console.log("updating props", nextProps, keyword);
   //   var defs = this.props.data.db.search(keyword);
   //   this.setState({defs:defs});
   // },
-  render: function() {
+  render() {
     if(!this.state) {
       return <div>thinking thinking thinking....</div>
     } else {
@@ -36,6 +37,6 @@ var UIFavouriteList = React.createClass({
       );
     }
   }
-});
+}
 
 module.exports = UIFavouriteList;

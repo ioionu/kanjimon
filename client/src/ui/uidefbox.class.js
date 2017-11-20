@@ -1,12 +1,12 @@
-var React = require('react');
-var classNames = require('classnames');
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
-var UIDefBox = React.createClass({
-  toggleFavourite: function(e) {
+class UIDefBox extends Component {
+  toggleFavourite(e) {
     this.props.data.toggleFavourite();
     this.forceUpdate();
-  },
-  render: function() {
+  }
+  render() {
     console.log("i am def render", this.props);
     var char = this.props.data; //new KanjiMon( this.props.data.db.getRecordByCharacter(this.props.data.char) );
     var readings = char.getReading();
@@ -40,5 +40,5 @@ var UIDefBox = React.createClass({
       </section>
     );
   }
-});
+};
 module.exports = UIDefBox;

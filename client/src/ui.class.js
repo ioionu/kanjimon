@@ -1,41 +1,46 @@
-var React = require('react');
-var marked = require('marked');
-var browserHistory = require('react-router').hashHistory; //browserHistory;
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import marked from 'marked';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 
 
-var DB = require('./db.class.js');
-var KanjiMon = require('./kanjimon.class.js');
+import DB from './db.class.js';
+import KanjiMon from './kanjimon.class.js';
 
-var UIDefList = require('./ui/uideflist.class.js');
+import UIDefList from './ui/uideflist.class.js';
 
-var UISearchBox = React.createClass({
-  search: function(e) {
+class UISearchBox extends Component {
+  search(e) {
     console.log("search", e);
     var kanji = {
       translation: ["desu"]
     };
     return kanji;
-  },
-  handleSearch: function (e) {
+  }
+  handleSearch(e) {
     e.preventDefault();
     if(this.state.keyword !== null) {
       var kanji = this.state.keyword;
       this.props.onKanjiMonSearch(kanji);
     }
-  },
-  handleCharChange: function (e) {
+  }
+  handleCharChange(e) {
     if (e.target.value.length > 0) {
       var char = e.target.value.trim();
       char = char.substr(0,1);
       var keyword = e.target.value.trim();
       this.setState({char: char, keyword:keyword});
     }
-  },
-  handleShowFavourites: function(e) {
+  }
+  handleShowFavourites(e) {
     e.preventDefault();
     this.props.onShowFavourites();
-  },
-  render: function() {
+  }
+  render() {
     return (
       <div className="searchBox">
         <form className="search" onSubmit={this.handleSearch}>
@@ -59,13 +64,13 @@ var UISearchBox = React.createClass({
       </div>
     );
   }
-});
+};
 
-var UIBattle = React.createClass({
-  battle: function(){
+class UIBattle extends Component {
+  battle(){
     console.log("lol");
-  },
-  render: function() {
+  }
+  render() {
     var defNodes = 123;
     return (
       <div className="defList">
@@ -73,10 +78,10 @@ var UIBattle = React.createClass({
       </div>
     );
   }
-});
+}
 
-var UIKanjiMon = React.createClass({
-  componentDidMount: function() {
+class UIKanjiMon extends Component {
+  componentDidMount() {
     console.log("i am mount");
     this.db = new DB();
     var _this = this; //TODO: make bind work with promise?
@@ -93,30 +98,33 @@ var UIKanjiMon = React.createClass({
         db: _this.db
       });
     });
-  },
-  getInitialState: function() {
+  }
+
+  getInitialState() {
     console.log("i am initial state", this);
     return null;
-  },
-  getDB: function() {
+  }
+  getDB() {
     this.props.data.db.getDB();
-  },
-  attack: function() {
+  }
+  attack() {
     var km1 = new KanjiMon(this.props.data.db.getKajisByReading("rain")[0]);
     var km2 = new KanjiMon(this.props.data.db.getKajisByReading("sun")[0]);
     this.props.data.attack(km1, km2);
-  },
-  handleKanjiMonSearch: function(keyword) {
+  }
+  handleKanjiMonSearch(keyword) {
     console.log("i am handleKanjiMonSearch", keyword);
     browserHistory.push('/search/' + keyword);
-  },
-  handleShowFavourites: function() {
+  }
+  handleShowFavourites() {
     browserHistory.push('/favourites');
-  },
+  }
 
-  render: function() {
+  render() {
     if(!this.state) {
-      return <div>loading loading loading... kanji db is big, should take a few seconds.</div>
+      return (
+        <div>loading loading loading... kanji db is big, should take a few seconds.</div>
+      )
     } else {
       return (
         <div className="kanjimon" url="/db/kanjidic2.json">
@@ -134,6 +142,6 @@ var UIKanjiMon = React.createClass({
       );
     }
   }
-});
+};
 
 module.exports = UIKanjiMon;

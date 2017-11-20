@@ -1,13 +1,13 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
 
-var Link = require('react-router').Link;
+//var Link = require('react-router').Link;
 
-var UIKanjiMon = require('./ui.class.js');
-var KanjiMon = require('./kanjimon.class.js');
-var Battle = require('./kmbattle.class.js');
+import UIKanjiMon from './ui.class.js';
+import KanjiMon from './kanjimon.class.js';
+import Battle from './kmbattle.class.js';
 
-var App = React.createClass({
+class App extends Component {
 
   render() {
     console.log("rndering app");
@@ -21,6 +21,6 @@ var App = React.createClass({
       </div>
     )
   }
-});
+}
 
 module.exports = App;

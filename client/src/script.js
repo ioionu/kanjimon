@@ -1,24 +1,32 @@
 // script.js
-var React = require('react');
-var ReactDOM = require('react-dom');
+import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 
 // import Router from 'react-router';
 // import { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
-var Router = require('react-router').Router;
-var Route = require('react-router').Route;
-var Link = require('react-router').Link;
-var history = require('react-router').hashHistory; //browserHistory;
+// var Router = require('react-router').Router;
+// var Route = require('react-router').Route;
+// var Link = require('react-router').Link;
+// var history = require('react-router').hashHistory; //browserHistory;
 
-require('fetch-polyfill');
-require("babel-register");
-var KanjiMon = require('./kanjimon.class.js');
-var UIKanjiMon = require('./ui.class.js');
-var UIDefList = require('./ui/uideflist.class.js');
-var UIFavouriteList = require('./ui/uifavouritelist.class.js');
-var UIDefBox = require('./ui/uidefbox.class.js');
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 
-var App = require('./app.class.js');
-var DB = require('./db.class.js');
+var css = require('../css/style.css')
+
+//require("babel-register");
+import KanjiMon from './kanjimon.class.js'
+import UIKanjiMon from './ui.class.js'
+import UIDefList from './ui/uideflist.class.js'
+import UIFavouriteList from './ui/uifavouritelist.class.js'
+import UIDefBox from './ui/uidefbox.class.js'
+
+import App from './app.class.js'
+import DB from './db.class.js'
 var dict;
 
 if(navigator.serviceWorker) {
@@ -44,7 +52,7 @@ function initRoute(app){
   console.log("i am initRoute", app);
 
   ReactDOM.render((
-    <Router history={history}>
+    <Router>
         <Route path="/" component={UIKanjiMon}>
           <Route path="/search/:key" component={UIDefList} />
           <Route path="/kanji/:key" component={UIDefBox} />

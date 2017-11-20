@@ -9,7 +9,7 @@ var babel = require('babelify');
 // style stuff
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
-var cssnext = require('cssnext');
+var cssnext = require('postcss-cssnext');
 var precss = require('precss');
 var lost = require('lost');
 
