@@ -9,6 +9,8 @@ import PropTypes from 'prop-types'
 // var Route = require('react-router').Route;
 // var Link = require('react-router').Link;
 // var history = require('react-router').hashHistory; //browserHistory;
+import createBrowserHistory from 'history/createBrowserHistory'
+const history = createBrowserHistory()
 
 import {
   BrowserRouter as Router,
@@ -52,7 +54,7 @@ function initRoute(app){
   console.log("i am initRoute", app);
 
   ReactDOM.render((
-    <Router>
+    <Router history={history}>
         <Route path="/" component={UIKanjiMon}>
           <Route path="/search/:key" component={UIDefList} />
           <Route path="/kanji/:key" component={UIDefBox} />

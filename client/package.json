@@ -24,6 +24,7 @@
     "css-loader": "^0.28.7",
     "cssnext": "^1.8.4",
     "gulp-postcss": "^6.4.0",
+    "history": "^4.7.2",
     "lost": "^6.8.1",
     "postcss": "^6.0.14",
     "postcss-cssnext": "^3.0.2",

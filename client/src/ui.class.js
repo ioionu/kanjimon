@@ -43,12 +43,12 @@ class UISearchBox extends Component {
   render() {
     return (
       <div className="searchBox">
-        <form className="search" onSubmit={this.handleSearch}>
+        <form className="search" onSubmit={(e)=>{this.handleSearch(e)}}>
           <input
             name="char"
             type="text"
             placeholder="Search by kanji or english"
-            onChange={this.handleCharChange}
+            onChange={(e)=>{this.handleCharChange(e)}}
             className="char"
             />
           <input
@@ -58,7 +58,7 @@ class UISearchBox extends Component {
             />
           <button
             className="showFavourites"
-            onClick={this.handleShowFavourites}
+            onClick={(e)=>{this.handleShowFavourites(e)}}
             >Fav</button>
         </form>
       </div>
@@ -114,10 +114,10 @@ class UIKanjiMon extends Component {
   }
   handleKanjiMonSearch(keyword) {
     console.log("i am handleKanjiMonSearch", keyword);
-    browserHistory.push('/search/' + keyword);
+    this.props.history.push('/search/' + keyword);
   }
   handleShowFavourites() {
-    browserHistory.push('/favourites');
+    //browserHistory.push('/favourites');
   }
 
   render() {
@@ -129,7 +129,7 @@ class UIKanjiMon extends Component {
       return (
         <div className="kanjimon" url="/db/kanjidic2.json">
           <UISearchBox
-            onKanjiMonSearch={this.handleKanjiMonSearch}
+            onKanjiMonSearch={(keyword)=>{this.handleKanjiMonSearch(keyword)}}
             onShowFavourites={this.handleShowFavourites}
             onGetDB={this.getDB}
             />
