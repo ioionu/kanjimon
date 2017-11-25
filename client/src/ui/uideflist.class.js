@@ -3,16 +3,20 @@ import PropTypes from 'prop-types'
 import UIDefBox from './uidefbox.class.js'
 
 class UIDefList extends Component {
+  constructor(props) {
+    super(props)
+    1+1
+  }
   componentDidMount() {
-    var keyword = this.props.params.key;
+    var keyword = this.props.match.params.key;
     console.log("i am UIDefList mount", keyword);
-    var defs = this.props.data.db.search(keyword);
+    var defs = this.props.data.search(keyword);
     this.setState({defs:defs});
   }
   componentWillReceiveProps(nextProps) {
     var keyword = nextProps.params.key;
     console.log("updating props", nextProps, keyword);
-    var defs = this.props.data.db.search(keyword);
+    var defs = this.props.data.search(keyword);
     this.setState({defs:defs});
   }
   render() {

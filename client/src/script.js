@@ -55,8 +55,7 @@ function initRoute(app){
 
   ReactDOM.render((
     <Router history={history}>
-        <Route path="/" component={UIKanjiMon}>
-          <Route path="/search/:key" component={UIDefList} />
+        <Route path="/" component={UIKanjiMon} >
           <Route path="/kanji/:key" component={UIDefBox} />
           <Route path="/favourites" component={UIFavouriteList} />
         </Route>
