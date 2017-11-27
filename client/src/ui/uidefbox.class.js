@@ -37,7 +37,7 @@ class UIDefBox extends Component {
           <dt>JLPT</dt>
           <dd>{jlpt}</dd>
         </dl>
-        <button onClick={this.toggleFavourite} className={ favouriteClass }>Fav</button>
+        <button onClick={(e)=>{this.toggleFavourite(e)}} className={ favouriteClass }>Fav</button>
       </section>
     );
   }

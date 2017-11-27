@@ -4,25 +4,32 @@ var KMBattle = require('./kmbattle.class.js');
 
 var DB = class DB {
   constructor() {
-    this.db = {}; // = db;
+    this.db = {};
+    this.ready = false;
+  }
 
-    this.battles = [];
+  init(callback) {
+    this.getDB('/db/kanjidic2.json')
+    .then(() => {
+      console.log('db b got');
+      callback();
+    });
   }
 
   getDB(url) {
     var db = this;
     return fetch(url)
-    .then(function(response){
+    .then((response) => {
       var dict = response.json();
       return dict;
     })
-    .then(function(dict){
-      db.db = dict.kanjidic2.character;
+    .then((dict) => {
+      this.db = dict.kanjidic2.character;
+      this.ready = true;
     });
   }
 
   getKanjisByJLPT(jlpt) {
-    //console.log("jlpt filter:", dict);
     var kanjis = this.db.filter(
       function(element, index, array){
         var state = (element.misc.jlpt == jlpt);
@@ -46,22 +53,22 @@ var DB = class DB {
     return record;
   }
   getKajisByReading(keyword) {
-    var fuck = "rain";
-    var results = this.db.filter(
-      function(element, index, array) {
-        var fuck;
-        //console.log("searchin for", keyword);
-        var def_found = false;
-        var km = new KanjiMon(element);
-        var english = km.getEnglish();
-        var found = english.find(function(translation) {
-          //console.log(translation);
-          //return (translation.toLowerCase().indexOf(keyword.toLowerCase()) >= 0);
-          return (translation.toLowerCase() == keyword.toLowerCase());
-        });
-        return (typeof found != 'undefined');
-      }
-    );
+    console.log("length:", this.db.length);
+    if (!this.ready) {
+      console.log('db is nor ready');
+      return [];
+    }
+    var results = this.db.filter((element, index, array) => {
+      var def_found = false;
+      var km = new KanjiMon(element);
+      var english = km.getEnglish();
+      var found = english.find((translation) => {
+        //console.log(translation);
+        //return (translation.toLowerCase().indexOf(keyword.toLowerCase()) >= 0);
+        return (translation.toLowerCase() == keyword.toLowerCase());
+      });
+      return (typeof found != 'undefined');
+    });
     return results;
   }
 

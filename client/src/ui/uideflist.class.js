@@ -5,7 +5,6 @@ import UIDefBox from './uidefbox.class.js'
 class UIDefList extends Component {
   constructor(props) {
     super(props)
-    1+1
   }
   componentDidMount() {
     var keyword = this.props.match.params.key;
@@ -14,10 +13,12 @@ class UIDefList extends Component {
     this.setState({defs:defs});
   }
   componentWillReceiveProps(nextProps) {
-    var keyword = nextProps.params.key;
-    console.log("updating props", nextProps, keyword);
-    var defs = this.props.data.search(keyword);
-    this.setState({defs:defs});
+    const keyword = nextProps.match.params.key;
+    const defs = this.props.data.search(keyword);
+    this.setState({
+      defs,
+      keyword
+    });
   }
   render() {
     if(!this.state) {

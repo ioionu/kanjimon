@@ -23,12 +23,8 @@ var css = require('../css/style.css')
 //require("babel-register");
 import KanjiMon from './kanjimon.class.js'
 import UIKanjiMon from './ui.class.js'
-import UIDefList from './ui/uideflist.class.js'
-import UIFavouriteList from './ui/uifavouritelist.class.js'
-import UIDefBox from './ui/uidefbox.class.js'
 
 import App from './app.class.js'
-import DB from './db.class.js'
 var dict;
 
 if(navigator.serviceWorker) {
@@ -54,11 +50,8 @@ function initRoute(app){
   console.log("i am initRoute", app);
 
   ReactDOM.render((
-    <Router history={history}>
-        <Route path="/" component={UIKanjiMon} >
-          <Route path="/kanji/:key" component={UIDefBox} />
-          <Route path="/favourites" component={UIFavouriteList} />
-        </Route>
+    <Router>
+      <Route path="/" component={UIKanjiMon} />
     </Router>
     ), document.getElementById('drop')
   );

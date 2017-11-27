@@ -8,26 +8,12 @@ import {
   withRouter
 } from 'react-router-dom'
 
-import DB from './db.class.js';
+import {db} from './db.js';
 import KanjiMon from './kanjimon.class.js';
 import UISearchBox from './ui/uisearchbox.class.js';
 import UIDefList from './ui/uideflist.class.js';
-
-const db = new DB();
-
-class UIBattle extends Component {
-  battle(){
-    console.log("lol");
-  }
-  render() {
-    var defNodes = 123;
-    return (
-      <div className="defList">
-        <button onClick={this.battle}>こうげき</button>
-      </div>
-    );
-  }
-}
+import UIFavouriteList from './ui/uifavouritelist.class.js';
+import UIDefBox from './ui/uidefbox.class.js';
 
 class UIDefListWrapper extends Component {
   render() {
@@ -37,45 +23,30 @@ class UIDefListWrapper extends Component {
   }
 }
 
+const UIDefPlaceholder = ({match}) => (
+  <div>this is a thing</div>
+)
 
 class UIKanjiMon extends Component {
-  componentDidMount() {
-    console.log("i am mount");
-    this.db = db;
-    var _this = this; //TODO: make bind work with promise?
-    return db.getDB('/db/kanjidic2.json')
-    .then(function(){
-      var defs = db.getKajisByReading("rain").map(function(def){
-        return new KanjiMon(def);
-      });
-      return defs;
-    })
-    .then(function(defs){
-      _this.setState({
-        defs: defs,
-        db: db
-      });
-    });
+  constructor() {
+    super();
+    this.state = {ready:false};
   }
 
-  getInitialState() {
-    console.log("i am initial state", this);
-    return null;
-  }
-  getDB() {
-    db.getDB();
-  }
-  attack() {
-    var km1 = new KanjiMon(db.getKajisByReading("rain")[0]);
-    var km2 = new KanjiMon(db.getKajisByReading("sun")[0]);
-    this.props.data.attack(km1, km2);
+  componentDidMount() {
+    db.init(() => {
+      this.setState({
+        ready: true
+      })
+    });
   }
   handleShowFavourites() {
-    //browserHistory.push('/favourites');
+    //TODO: replace this with <Link>
+    this.props.history.push('/favourites');
   }
 
   render() {
-    if(!this.state) {
+    if(!this.state.ready) {
       return (
         <div>loading loading loading... kanji db is big, should take a few seconds.</div>
       )
@@ -84,10 +55,12 @@ class UIKanjiMon extends Component {
         <div className="kanjimon" url="/db/kanjidic2.json">
           <UISearchBox
             onShowFavourites={this.handleShowFavourites}
-            onGetDB={this.getDB}
             />
           <div className="defListWrapper">
-          <Route path="/search/:key" component={UIDefListWrapper} data='w00t!'/>
+            <Route exact path="/" component={UIDefPlaceholder} />
+            <Route path="/search/:key" component={UIDefListWrapper} />
+            <Route path="/kanji/:key" component={UIDefBox} />
+            <Route exact path="/favourites" component={UIFavouriteList} />
           </div>
           <div className="about">
             Under Construction : Copyright 2016 Joshua McCluskey : Fork me on github <a href="https://github.com/ioionu/kanjimon">https://github.com/ioionu/kanjimon</a> : Based on edict

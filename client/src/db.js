@@ -1,5 +1,5 @@
 import DB from './db.class.js'
 
-export.default = ()=>{
-  db = new DB()
-}
+const db = new DB();
+
+export {db};

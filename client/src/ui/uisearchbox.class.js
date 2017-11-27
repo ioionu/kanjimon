@@ -7,6 +7,7 @@ import {
   Link,
   withRouter
 } from 'react-router-dom'
+import {db} from '../db.js';
 
 class UISearchBox extends Component {
   search(e) {
@@ -18,10 +19,12 @@ class UISearchBox extends Component {
   }
   handleSearch(e) {
     e.preventDefault();
-    if(this.state.keyword !== null) {
+    if(this.state !== null && this.state.keyword !== null) {
       var keyword = this.state.keyword;
       //this.props.onKanjiMonSearch(kanji);
       this.props.history.push('/search/' + keyword);
+    } else {
+      this.props.history.push('/');
     }
   }
   handleCharChange(e) {
@@ -65,6 +68,7 @@ class UISearchBox extends Component {
             className="showFavourites"
             onClick={(e)=>{this.handleShowFavourites(e)}}
             >Fav</button>
+            <Link to='/favourites'>Fav 2.0</Link>
         </form>
       </div>
     );
