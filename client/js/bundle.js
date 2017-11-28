@@ -25674,15 +25674,6 @@ var UISearchBox = function (_Component) {
   }
 
   _createClass(UISearchBox, [{
-    key: 'search',
-    value: function search(e) {
-      console.log("search", e);
-      var kanji = {
-        translation: ["desu"]
-      };
-      return kanji;
-    }
-  }, {
     key: 'handleSearch',
     value: function handleSearch(e) {
       e.preventDefault();
@@ -25705,12 +25696,6 @@ var UISearchBox = function (_Component) {
       }
     }
   }, {
-    key: 'handleShowFavourites',
-    value: function handleShowFavourites(e) {
-      e.preventDefault();
-      this.props.onShowFavourites();
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -25722,7 +25707,6 @@ var UISearchBox = function (_Component) {
           {
             type: 'button',
             onClick: function onClick(e) {
-              e.preventDefault();
               _this2.handleSearch(e);
             } },
           '\u03A3(O_O) \u691C\u7D22'
@@ -25735,7 +25719,7 @@ var UISearchBox = function (_Component) {
         _react2.default.createElement(
           'form',
           { className: 'search', onSubmit: function onSubmit(e) {
-              e.preventDefault();
+              _this2.handleSearch(e);
             } },
           _react2.default.createElement('input', {
             name: 'char',
@@ -25747,16 +25731,6 @@ var UISearchBox = function (_Component) {
             className: 'char'
           }),
           _react2.default.createElement(SearchButton, null),
-          _react2.default.createElement(
-            'button',
-            {
-              className: 'showFavourites',
-              onClick: function onClick(e) {
-                _this2.handleShowFavourites(e);
-              }
-            },
-            'Fav'
-          ),
           _react2.default.createElement(
             _reactRouterDom.Link,
             { to: '/favourites' },

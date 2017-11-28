@@ -10,13 +10,6 @@ import {
 import {db} from '../db.js';
 
 class UISearchBox extends Component {
-  search(e) {
-    console.log("search", e);
-    var kanji = {
-      translation: ["desu"]
-    };
-    return kanji;
-  }
   handleSearch(e) {
     e.preventDefault();
     if(this.state !== null && this.state.keyword !== null) {
@@ -35,27 +28,19 @@ class UISearchBox extends Component {
       this.setState({char: char, keyword:keyword});
     }
   }
-  handleShowFavourites(e) {
-    e.preventDefault();
-    this.props.onShowFavourites();
-  }
-
 
   render() {
     const SearchButton = withRouter(({history})=>(
       <button
         type='button'
-        onClick={(e) => {
-          e.preventDefault()
-          this.handleSearch(e)
-        }}>
+        onClick={(e)=>{this.handleSearch(e)}}>
         Σ(O_O) 検索
       </button>
     ))
 
     return (
       <div className="searchBox">
-        <form className="search" onSubmit={(e)=>{e.preventDefault()}}>
+        <form className="search" onSubmit={(e)=>{this.handleSearch(e)}}>
           <input
             name="char"
             type="text"
@@ -64,11 +49,7 @@ class UISearchBox extends Component {
             className="char"
             />
           <SearchButton/>
-          <button
-            className="showFavourites"
-            onClick={(e)=>{this.handleShowFavourites(e)}}
-            >Fav</button>
-            <Link to='/favourites'>Fav 2.0</Link>
+          <Link to='/favourites'>Fav 2.0</Link>
         </form>
       </div>
     );
