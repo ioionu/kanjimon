@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 class UIDefBox extends Component {
   toggleFavourite(e) {
@@ -14,11 +15,10 @@ class UIDefBox extends Component {
     var stroke_count = char.getStrokeCount();
     var jlpt = char.getJLPT();
     var literal = char.getLiteral();
-    var favouriteClass = {}
-    // classNames({
-    //   "favourite-button": true,
-    //   "is-favourite": char.isFavourite()
-    // });
+    var favouriteClass = classNames({
+      "favourite-button": true,
+      "is-favourite": char.isFavourite()
+    });
 
     return (
       <section className="defBox">

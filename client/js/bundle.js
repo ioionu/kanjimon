@@ -1613,6 +1613,10 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _classnames = __webpack_require__(88);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1648,11 +1652,10 @@ var UIDefBox = function (_Component) {
       var stroke_count = char.getStrokeCount();
       var jlpt = char.getJLPT();
       var literal = char.getLiteral();
-      var favouriteClass = {};
-      // classNames({
-      //   "favourite-button": true,
-      //   "is-favourite": char.isFavourite()
-      // });
+      var favouriteClass = (0, _classnames2.default)({
+        "favourite-button": true,
+        "is-favourite": char.isFavourite()
+      });
 
       return _react2.default.createElement(
         'section',
@@ -3242,7 +3245,7 @@ var _uideflistClass = __webpack_require__(87);
 
 var _uideflistClass2 = _interopRequireDefault(_uideflistClass);
 
-var _uifavouritelistClass = __webpack_require__(88);
+var _uifavouritelistClass = __webpack_require__(89);
 
 var _uifavouritelistClass2 = _interopRequireDefault(_uifavouritelistClass);
 
@@ -4746,7 +4749,7 @@ var _uiClass = __webpack_require__(42);
 
 var _uiClass2 = _interopRequireDefault(_uiClass);
 
-var _appClass = __webpack_require__(89);
+var _appClass = __webpack_require__(90);
 
 var _appClass2 = _interopRequireDefault(_appClass);
 
@@ -4763,7 +4766,7 @@ var history = (0, _createBrowserHistory2.default)();
 // var history = require('react-router').hashHistory; //browserHistory;
 
 
-var css = __webpack_require__(90);
+var css = __webpack_require__(91);
 
 //require("babel-register");
 
@@ -25837,6 +25840,61 @@ module.exports = UIDefList;
 /* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2016 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				classes.push(classNames.apply(null, arg));
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if (typeof module !== 'undefined' && module.exports) {
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+			return classNames;
+		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {
+		window.classNames = classNames;
+	}
+}());
+
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -25923,7 +25981,7 @@ var UIFavouriteList = function (_Component) {
 module.exports = UIFavouriteList;
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25992,13 +26050,13 @@ var App = function (_Component) {
 module.exports = App;
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(91);
+var content = __webpack_require__(92);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -26006,7 +26064,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(93)(content, options);
+var update = __webpack_require__(94)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -26023,10 +26081,10 @@ if(false) {
 }
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(92)(undefined);
+exports = module.exports = __webpack_require__(93)(undefined);
 // imports
 
 
@@ -26037,7 +26095,7 @@ exports.push([module.i, "body {\n  background-color: white;\n  font-family: sans
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports) {
 
 /*
@@ -26119,7 +26177,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -26175,7 +26233,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(94);
+var	fixUrls = __webpack_require__(95);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -26491,7 +26549,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports) {
 
 
