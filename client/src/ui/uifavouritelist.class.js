@@ -2,16 +2,15 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import UIDefBox from './uidefbox.class.js';
 import KanjiFavourite from '../kanjifavourite.class.js';
+import {db} from '../db.js'
 
 class UIFavouriteList extends Component {
   componentDidMount() {
     console.log("i am UIFavouritesList mount");
     var kf = new KanjiFavourite();
-    var favourites = kf.loadFavourites().map(
-      (favourite) => {
-        return this.props.data.db.search(favourite)[0];
-      }
-    );
+    var favourites = kf.loadFavourites().map((favourite) => {
+        return db.search(favourite)[0];
+    });
 
     this.setState({favourites: favourites});
   }

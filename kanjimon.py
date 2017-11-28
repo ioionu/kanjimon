@@ -26,6 +26,11 @@ def index():
     name = "waqeqer"
     return template('templates/hello', name=name)
 
+@route('/favourites')
+def index():
+    name = "waqeqer"
+    return template('templates/hello', name=name)
+
 @route('/km')
 def index():
     name = "waqeqer"
