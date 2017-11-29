@@ -1,6 +1,5 @@
-var KanjiMon = require('./kanjimon.class.js');
-var KMBattle = require('./kmbattle.class.js');
-
+import KanjiMon from './kanjimon.class.js';
+import KMBattle from './kmbattle.class.js';
 
 var DB = class DB {
   constructor() {
@@ -72,34 +71,56 @@ var DB = class DB {
     return results;
   }
 
-  newBattle() {
-    var battle = new KMBattle(
-      new KanjiMon(this.getRecordByCharacter("雨")),
-      new KanjiMon(this.getRecordByCharacter("服"))
-    );
-    this.battles.push(battle);
-    return battle;
+  getKanjisByYomi(keyword, yomi) {
+    if (!this.ready) {
+      console.log('db is nor ready');
+      return [];
+    }
+    const results = this.db.filter((element, index, array) => {
+      const km = new KanjiMon(element);
+      const readings = km.getReading();
+      if (readings[yomi]) {
+        return (readings[yomi].indexOf(keyword) !== -1);
+      }
+      return false;
+    });
+    return results;
   }
 
   search(keyword) {
 
-    var defs;
+    let defs = [];
 
     // is this a kanji or an english word?
-    var re = /[a-z]/i;
-    if(keyword.match(re)) {
+    const english_re = /[a-z]/i;
+
+    /*
+    * match https://www.unicode.org/charts/PDF/U3040.pdf
+    * using https://stackoverflow.com/questions/21109011/javascript-unicode-string-chinese-character-but-no-punctuation
+    * shits cool!
+    * TODO: use this to lookup Kunyomi
+    */
+    const hiragana_re = /[\u{3040}-\u{309F}]+/u;
+
+    if(keyword.match(english_re)) {
       //get kanjis
       defs = this.getKajisByReading(keyword).map(function(def){
         return new KanjiMon(def);
       });
-      console.log("kanjis", defs);
-    } else {
+    }
+    else if (keyword.match(hiragana_re)) {
+      defs = this.getKanjisByYomi(keyword, 'ja_kun').map((def) => {
+        return new KanjiMon(def);
+      });
+    }
+    else {
       //assume is kanji
       //TODO: test for kanji and fail gracefully
       try {
         defs = [new KanjiMon( this.getRecordByCharacter(keyword.substr(0,1)) )];　// render expects an array
       } catch(e) {
         console.log("kanji not found", keyword, e);
+        defs = [];
       }
       console.log("kanjis", defs);
     }

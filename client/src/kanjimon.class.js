@@ -1,5 +1,6 @@
-var KanjiFavourite = require("./kanjifavourite.class.js");
-var KanjiMon = class KanjiMon {
+import KanjiFavourite from './kanjifavourite.class.js';
+
+class KanjiMon {
   constructor(kanji) {
     if(typeof kanji == 'undefined') {
       throw new ReferenceError();
@@ -7,8 +8,6 @@ var KanjiMon = class KanjiMon {
     this.kanji = kanji;
     this.kanji.key = this.kanji.literal;
     this.favourite = new KanjiFavourite( this );
-
-    //  console.log("i am kanji");
   }
 
   getLiteral() {
@@ -17,6 +16,10 @@ var KanjiMon = class KanjiMon {
 
   getReading() {
     var readings = {};
+
+    if(typeof this.kanji.reading_meaning === 'undefined') {
+      return readings;
+    }
 
     //some kanji readigs are not an array... agh. eg "犭"
     //TODO: this is a horrible test, based on http://stackoverflow.com/questions/4775722/check-if-object-is-array
@@ -27,7 +30,7 @@ var KanjiMon = class KanjiMon {
         if (read['@r_type'] == 'ja_kun')
           readings.ja_kun = read['#text'];
       }
-      console.log("shit", readings);
+      //console.log("shit", readings);
     }
     return readings;
   }

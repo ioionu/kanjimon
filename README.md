@@ -1,4 +1,4 @@
-#kanjimon
+# kanjimon
 
 ## Dictionary file
 
