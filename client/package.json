@@ -34,7 +34,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-dev": "webpack --watch --devtool source-map",
-    "build": "webpack --optimize-minimize"
+    "build": "webpack --config webpack.prod.config.js --optimize-minimize"
   },
   "author": "josh io@ioio.nu",
   "license": "GPL-3.0"
