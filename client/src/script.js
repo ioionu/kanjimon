@@ -27,20 +27,16 @@ import UIKanjiMon from './ui.class.js'
 import App from './app.class.js'
 var dict;
 
-if(navigator.serviceWorker) {
-  // Checking if service worker is registered. If it's not, register it
-  // and reload the page to be sure the client is under service worker's control.
-  navigator.serviceWorker.getRegistration().then(function(registration) {
-    if (!registration || !navigator.serviceWorker.controller) {
-      navigator.serviceWorker.register('/serviceWorker.js').then(function() {
-        console.log('Service worker registered, reloading the page');
-      });
-    } else {
-      console.log('DEBUG: client is under the control of service worker');
-      proceed();
-    }
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/serviceWorker.js').then(registration => {
+      console.log('SW registered: ', registration);
+    }).catch(registrationError => {
+      console.log('SW registration failed: ', registrationError);
+    });
   });
 }
+
 
 function proceed() {
   console.log("do stuff with service worker");

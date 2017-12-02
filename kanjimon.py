@@ -11,12 +11,6 @@ def send_static(filename):
 def send_static(filename):
     return static_file(filename, root='/home/gamera/code/kanjimon/client/db')
 
-@route('/serviceWorker.js')
-def send_static():
-    f = static_file('serviceWorker.js', root='/home/gamera/code/kanjimon/client/js')
-    f.set_header('Service-Worker-Allowed', '/')
-    return f
-
 @route('/hello/<name>')
 def index(name):
     return template('templates/hello', name=name)
@@ -35,6 +29,24 @@ def index():
 def index():
     name = "waqeqer"
     return template('templates/hello', name=name)
+
+@route('/serviceWorker.js')
+def index():
+    f = static_file('serviceWorker.js', root='/home/gamera/code/kanjimon/client/js')
+    f.set_header('Service-Worker-Allowed', '/')
+    return f
+
+@route('/js/db.json')
+def index():
+    f = static_file('db.json', root='/home/gamera/code/kanjimon/client/js')
+    f.set_header('Service-Worker-Allowed', '/')
+    return f
+
+@route('/js/sw-toolbox.js')
+def index():
+    f = static_file('sw-toolbox.js', root='/home/gamera/code/kanjimon/client/js')
+    f.set_header('Service-Worker-Allowed', '/')
+    return f
 
 @route('/search/<name>')
 def index(name):

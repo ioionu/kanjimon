@@ -8,7 +8,7 @@ var DB = class DB {
   }
 
   init(callback) {
-    this.getDB('/db/kanjidic2.json')
+    this.getDB('/js/db.json')
     .then(() => {
       console.log('db b got');
       callback();

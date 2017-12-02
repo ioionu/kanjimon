@@ -1,5 +1,10 @@
+//import { copyFile } from 'fs';
+
 const path = require('path');
 var webpack = require('webpack')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const dist = 'js'
+
 const config = {
   entry: './src/script.js',
   output: {
@@ -25,7 +30,14 @@ const config = {
         loader: 'svg-url-loader?classPrefix'
       }
     ]
-  }
+  },
+  plugins: [
+    new CopyWebpackPlugin([
+      {from: 'db/kanjidic2.json', to: 'db.json'},
+      {from: 'node_modules/sw-toolbox/sw-toolbox.js', to: 'sw-toolbox.js'},
+      {from: 'src/serviceWorker.js', to: 'serviceWorker.js'},
+    ]),
+  ]
 };
 
 module.exports = config
