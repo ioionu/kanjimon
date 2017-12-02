@@ -18,7 +18,7 @@ import UIDefBox from './ui/uidefbox.class.js';
 class UIDefListWrapper extends Component {
   render() {
     return (
-      <UIDefList {...this.props} data={db}/>
+      <UIDefList {...this.props} />
     )
   }
 }
@@ -39,10 +39,6 @@ class UIKanjiMon extends Component {
         ready: true
       })
     });
-  }
-  handleShowFavourites() {
-    //TODO: replace this with <Link>
-    this.props.history.push('/favourites');
   }
 
   render() {

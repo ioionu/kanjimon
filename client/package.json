@@ -4,13 +4,9 @@
   "description": "kanji fight to the death!",
   "main": "gulpfile.js",
   "dependencies": {
-    "browserify": "^14.5.0",
-    "gulp": "^3.9.1",
-    "gulp-sourcemaps": "^2.6.1",
     "marked": "^0.3.6",
     "react-router": "^4.2.0",
     "react-router-native-button": "^1.2.0",
-    "serviceworker-cache-polyfill": "^4.0.0",
     "sw-toolbox": "^3.6.0"
   },
   "devDependencies": {
@@ -23,14 +19,8 @@
     "classnames": "^2.2.3",
     "copy-webpack-plugin": "^4.2.3",
     "css-loader": "^0.28.7",
-    "cssnext": "^1.8.4",
-    "gulp-postcss": "^6.4.0",
     "history": "^4.7.2",
     "lost": "^6.8.1",
-    "postcss": "^6.0.14",
-    "postcss-cssnext": "^3.0.2",
-    "postcss-loader": "^2.0.8",
-    "precss": "^1.4.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-router-dom": "^4.2.2",

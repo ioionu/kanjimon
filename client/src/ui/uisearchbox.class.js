@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import marked from 'marked';
 import {
   BrowserRouter as Router,
   Route,

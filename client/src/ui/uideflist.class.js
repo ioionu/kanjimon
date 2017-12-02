@@ -1,20 +1,24 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import UIDefBox from './uidefbox.class.js'
+import {db} from '../db.js';
 
 class UIDefList extends Component {
   constructor(props) {
     super(props)
   }
   componentDidMount() {
-    var keyword = this.props.match.params.key;
+    const keyword = this.props.match.params.key;
     console.log("i am UIDefList mount", keyword);
-    var defs = this.props.data.search(keyword);
-    this.setState({defs:defs});
+    const defs = db.search(keyword);
+    this.setState({
+      defs,
+      keyword
+    });
   }
   componentWillReceiveProps(nextProps) {
     const keyword = nextProps.match.params.key;
-    const defs = this.props.data.search(keyword);
+    const defs = db.search(keyword);
     this.setState({
       defs,
       keyword

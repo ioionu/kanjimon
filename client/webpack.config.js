@@ -1,5 +1,3 @@
-//import { copyFile } from 'fs';
-
 const path = require('path');
 var webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -23,7 +21,7 @@ const config = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader','css-loader','postcss-loader']
+        use: ['style-loader','css-loader']
       },
       {
         test: /\.(svg)$/,

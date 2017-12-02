@@ -1,5 +1,4 @@
 import KanjiMon from './kanjimon.class.js';
-import KMBattle from './kmbattle.class.js';
 
 var DB = class DB {
   constructor() {
@@ -10,7 +9,6 @@ var DB = class DB {
   init(callback) {
     this.getDB('/js/db.json')
     .then(() => {
-      console.log('db b got');
       callback();
     });
   }
