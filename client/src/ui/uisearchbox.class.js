@@ -1,5 +1,18 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+/*
+import IconButton from 'material-ui/IconButton';
+import Search from 'material-ui-icons/Search';
+import Favorite from 'material-ui-icons/Favorite';
+import AppBar from 'material-ui/AppBar';
+import withStyles from 'material-ui/styles';
+import Toolbar from 'material-ui/Toolbar';
+import TextField from 'material-ui/TextField';
+*/
+import { Button } from 'react-toolbox/lib/button';
+import { AppBar } from 'react-toolbox/lib/app_bar';
+import { Input } from 'react-toolbox/lib/input';
+import { Navigation } from 'react-toolbox/lib/navigation';
 import {
   BrowserRouter as Router,
   Route,
@@ -7,6 +20,13 @@ import {
   withRouter
 } from 'react-router-dom'
 import {db} from '../db.js';
+
+const styles = {
+  flex: {
+    flex: 1
+  }
+};
+
 
 class UISearchBox extends Component {
   handleSearch(e) {
@@ -20,37 +40,43 @@ class UISearchBox extends Component {
     }
   }
   handleCharChange(e) {
-    if (e.target.value.length > 0) {
-      var char = e.target.value.trim();
+    if (e.length > 0) {
+      var char = e.trim();
       char = char.substr(0,1);
-      var keyword = e.target.value.trim();
+      var keyword = e.trim();
       this.setState({char: char, keyword:keyword});
     }
   }
 
   render() {
+    const { classes } = this.props;
+
     const SearchButton = withRouter(({history})=>(
-      <button
-        type='button'
-        onClick={(e)=>{this.handleSearch(e)}}>
-        Σ(O_O) 検索
-      </button>
+      <Button onClick={(e)=>{this.handleSearch(e)}} label="Search" />
     ))
 
     return (
-      <div className="searchBox">
-        <form className="search" onSubmit={(e)=>{this.handleSearch(e)}}>
-          <input
-            name="char"
-            type="text"
-            placeholder="Search by kanji or english"
-            onChange={(e)=>{this.handleCharChange(e)}}
-            className="char"
-            />
-          <SearchButton/>
-          <Link to='/favourites'>Fav 2.0</Link>
-        </form>
-      </div>
+      <AppBar leftIcon='menu'>
+        <div className="wrapper">
+          <div>
+            <Input
+              type="text"
+              name="char"
+              hint="Search by kanji or english"
+              onChange={(e)=>{this.handleCharChange(e)}}
+              className="char"
+              />
+          </div>
+          <div>
+            <SearchButton/>
+          </div>
+          <div>
+            <Link to='/favourites'>
+            Fav
+            </Link>
+          </div>
+        </div>
+      </AppBar>
     );
   }
 };

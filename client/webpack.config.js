@@ -1,5 +1,5 @@
 const path = require('path');
-var webpack = require('webpack')
+const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const dist = 'js'
 
@@ -21,13 +21,25 @@ const config = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader','css-loader']
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true, // default is false
+              sourceMap: true,
+              importLoaders: 1,
+              localIdentName: "[name]--[local]--[hash:base64:8]"
+            }
+          },
+          "postcss-loader"
+        ]
       },
       {
         test: /\.(svg)$/,
         loader: 'svg-url-loader?classPrefix'
       }
-    ]
+    ],
   },
   plugins: [
     new CopyWebpackPlugin([
@@ -35,7 +47,7 @@ const config = {
       {from: 'node_modules/sw-toolbox/sw-toolbox.js', to: 'sw-toolbox.js'},
       {from: 'src/serviceWorker.js', to: 'serviceWorker.js'},
     ]),
-  ]
+  ],
 };
 
 module.exports = config

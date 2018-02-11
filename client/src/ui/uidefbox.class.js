@@ -2,6 +2,21 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
+/*
+import CardActions from 'material-ui/Card';
+import CardHeader from 'material-ui/Card';
+import CardMedia from 'material-ui/Card';
+import CardTitle from 'material-ui/Card';
+import CardText from 'material-ui/Card';
+import Card from 'material-ui/Card';
+import IconButton from 'material-ui/IconButton';
+import Favorite from 'material-ui-icons/Favorite';
+import FavoriteBorder from 'material-ui-icons/FavoriteBorder';
+*/
+
+import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
+import { Button } from 'react-toolbox/lib/button';
+
 class UIDefBox extends Component {
   toggleFavourite(e) {
     this.props.data.toggleFavourite();
@@ -20,26 +35,40 @@ class UIDefBox extends Component {
       "is-favourite": char.isFavourite()
     });
 
-    return (
-      <section className="defBox">
-        <h2>{literal}</h2>
-        <dl>
-          <dt>Kanji</dt>
-          <dd>{literal}</dd>
-          <dt>Onyomi</dt>
-          <dd>{readings.ja_on}</dd>
-          <dt>Kunyomi</dt>
-          <dd>{readings.ja_kun}</dd>
-          <dt>Translation</dt>
-          <dd>{english}</dd>
-          <dt>Stroke Count</dt>
-          <dd>{stroke_count}</dd>
-          <dt>JLPT</dt>
-          <dd>{jlpt}</dd>
-        </dl>
-        <button onClick={(e)=>{this.toggleFavourite(e)}} className={ favouriteClass }>Fav</button>
-      </section>
+    var favoriteIcon = char.isFavourite() ? (
+      <Button label="fav"/>
+    ) : ( 
+      <Button label="unfav" /> 
+    )
+
+    const why_you_no_work = (
+      <div className="defBox">
+        <Card>
+          <CardTitle title={literal}/>
+          <CardText>
+            <dl>
+              <dt>Kanji</dt>
+              <dd>{literal}</dd>
+              <dt>Onyomi</dt>
+              <dd>{readings.ja_on}</dd>
+              <dt>Kunyomi</dt>
+              <dd>{readings.ja_kun}</dd>
+              <dt>Translation</dt>
+              <dd>{english}</dd>
+              <dt>Stroke Count</dt>
+              <dd>{stroke_count}</dd>
+              <dt>JLPT</dt>
+              <dd>{jlpt}</dd>
+            </dl>
+          </CardText>
+          <CardActions>
+            <Button onClick={(e)=>{this.toggleFavourite(e)}} className={ favouriteClass } />
+            { favoriteIcon }
+          </CardActions>
+        </Card>
+      </div>
     );
+    return why_you_no_work;
   }
 };
 module.exports = UIDefBox;

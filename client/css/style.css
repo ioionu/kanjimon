@@ -1,71 +1,20 @@
 body {
   background-color: white;
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
   color: black;
-  padding: 1em;
-}
-
-a:link,
-a:visited
-{
-  color:gray;
-}
-
-form.search {
-  lost-center: 980px;
-  display: flex;
-  padding: 1em 0;
-  border-width: 1px 0;
-  border-style: solid;
-  border-color: gray;
-
-  & input.char
-  {
-    flex-grow: 1;
-    background: transparent;
-    border: 1px solid gray;
-    color: black;
-  }
-
-  input.button
-  {
-    background: transparent;
-    border: 1px solid gray;
-    color: black;
-    margin-left: 1em;
-  }
-}
-.defListWrapper{
-  lost-center: 980px;
-}
-
-section {
-  border-bottom: 1px solid pink;
-
-  & h2 {
-    /*lost-column: 2/3;*/
-    font-size-adjust: 2;
-    font-weight: normal;
-    text-align: center;
-  }
-
-  dl {
-    /*lost-column: 3/3;*/
-  }
+  padding: 0;
 }
 
 .about
 {
   margin-top: 1em;
-  lost-center: 980px;
 }
 
-.favourite-button
-{
-  background-color: white;
+.wrapper {
+  border: 1px solid pink;
+  display: flex;
 }
 
-.favourite-button.is-favourite
-{
-  background-color: yellow;
+.wrapper > div {
+  flex: 1 auto;
 }

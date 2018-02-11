@@ -14,6 +14,7 @@ import UISearchBox from './ui/uisearchbox.class.js';
 import UIDefList from './ui/uideflist.class.js';
 import UIFavouriteList from './ui/uifavouritelist.class.js';
 import UIDefBox from './ui/uidefbox.class.js';
+import { Button } from 'react-toolbox/lib/button';
 
 class UIDefListWrapper extends Component {
   render() {
@@ -24,7 +25,7 @@ class UIDefListWrapper extends Component {
 }
 
 const UIDefPlaceholder = ({match}) => (
-  <div>this is a thing</div>
+  <div>this is a thing xx</div>
 )
 
 class UIKanjiMon extends Component {
@@ -58,8 +59,9 @@ class UIKanjiMon extends Component {
             <Route path="/kanji/:key" component={UIDefBox} />
             <Route exact path="/favourites" component={UIFavouriteList} />
           </div>
+
           <div className="about">
-            Under Construction : Copyright 2016 Joshua McCluskey : Fork me on github <a href="https://github.com/ioionu/kanjimon">https://github.com/ioionu/kanjimon</a> : Based on edict
+            _Under Construction : Copyright 2016 Joshua McCluskey : Fork me on github <a href="https://github.com/ioionu/kanjimon">https://github.com/ioionu/kanjimon</a> : Based on edict
           </div>
         </div>
       );
