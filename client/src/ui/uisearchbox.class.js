@@ -8,11 +8,13 @@ import AppBar from 'material-ui/AppBar';
 import withStyles from 'material-ui/styles';
 import Toolbar from 'material-ui/Toolbar';
 import TextField from 'material-ui/TextField';
-*/
+
 import { Button } from 'react-toolbox/lib/button';
 import { AppBar } from 'react-toolbox/lib/app_bar';
 import { Input } from 'react-toolbox/lib/input';
 import { Navigation } from 'react-toolbox/lib/navigation';
+*/
+
 import {
   BrowserRouter as Router,
   Route,
@@ -52,14 +54,14 @@ class UISearchBox extends Component {
     const { classes } = this.props;
 
     const SearchButton = withRouter(({history})=>(
-      <Button onClick={(e)=>{this.handleSearch(e)}} label="Search" />
+      <button onClick={(e)=>{this.handleSearch(e)}} label="Search" />
     ))
 
     return (
-      <AppBar leftIcon='menu'>
+      <div className='menu'>
         <div className="wrapper">
           <div>
-            <Input
+            <input
               type="text"
               name="char"
               hint="Search by kanji or english"
@@ -76,7 +78,7 @@ class UISearchBox extends Component {
             </Link>
           </div>
         </div>
-      </AppBar>
+      </div>
     );
   }
 };

@@ -9,7 +9,7 @@ import {
   Link
 } from 'react-router-dom'
 
-import style from '../css/style.css'
+//import style from '../css/style.css'
 //style.use()
 
 //require("babel-register");
@@ -34,13 +34,18 @@ function initRoute(app){
     <Router>
       <Route path="/" component={UIKanjiMon} />
     </Router>
-    ), document.getElementById('root')
+    ), document.getElementById('drop')
   );
 }
 
 function init() {
-  var app = new App();
-  initRoute(app);
+  //var app = new App();
+  //initRoute(app);
+  initRoute();
 }
 
-init();
+initRoute();
+
+if (module.hot) {
+  module.hot.accept('./ui.class.js', initRoute);
+}

@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import marked from 'marked';
 import {
   BrowserRouter as Router,
   Route,
@@ -14,7 +13,7 @@ import UISearchBox from './ui/uisearchbox.class.js';
 import UIDefList from './ui/uideflist.class.js';
 import UIFavouriteList from './ui/uifavouritelist.class.js';
 import UIDefBox from './ui/uidefbox.class.js';
-import { Button } from 'react-toolbox/lib/button';
+// import { Button } from 'react-toolbox/lib/button';
 
 class UIDefListWrapper extends Component {
   render() {
@@ -69,4 +68,4 @@ class UIKanjiMon extends Component {
   }
 };
 
-module.exports = UIKanjiMon;
+export default UIKanjiMon;

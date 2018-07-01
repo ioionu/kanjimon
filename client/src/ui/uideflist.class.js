@@ -44,4 +44,4 @@ class UIDefList extends Component {
   }
 };
 
-module.exports = UIDefList;
+export default UIDefList;

@@ -7,7 +7,7 @@ var DB = class DB {
   }
 
   init(callback) {
-    this.getDB('/js/db.json')
+    this.getDB('/db.json')
     .then(() => {
       callback();
     });
@@ -127,4 +127,4 @@ var DB = class DB {
   }
 };
 
-module.exports = DB;
+export default DB;

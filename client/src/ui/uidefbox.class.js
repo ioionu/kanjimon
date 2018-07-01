@@ -14,8 +14,8 @@ import Favorite from 'material-ui-icons/Favorite';
 import FavoriteBorder from 'material-ui-icons/FavoriteBorder';
 */
 
-import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
-import { Button } from 'react-toolbox/lib/button';
+// import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
+// import { Button } from 'react-toolbox/lib/button';
 
 class UIDefBox extends Component {
   toggleFavourite(e) {
@@ -36,16 +36,16 @@ class UIDefBox extends Component {
     });
 
     var favoriteIcon = char.isFavourite() ? (
-      <Button label="fav"/>
+      <button label="fav"/>
     ) : ( 
-      <Button label="unfav" /> 
+      <button label="unfav" /> 
     )
 
     const why_you_no_work = (
       <div className="defBox">
-        <Card>
-          <CardTitle title={literal}/>
-          <CardText>
+        <div>
+          <h2>{literal}</h2>
+          <div>
             <dl>
               <dt>Kanji</dt>
               <dd>{literal}</dd>
@@ -60,15 +60,15 @@ class UIDefBox extends Component {
               <dt>JLPT</dt>
               <dd>{jlpt}</dd>
             </dl>
-          </CardText>
-          <CardActions>
-            <Button onClick={(e)=>{this.toggleFavourite(e)}} className={ favouriteClass } />
+          </div>
+          <div>
+            <button onClick={(e)=>{this.toggleFavourite(e)}} className={ favouriteClass } />
             { favoriteIcon }
-          </CardActions>
-        </Card>
+          </div>
+        </div>
       </div>
     );
     return why_you_no_work;
   }
 };
-module.exports = UIDefBox;
+export default UIDefBox;

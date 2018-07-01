@@ -38,4 +38,4 @@ class UIFavouriteList extends Component {
   }
 }
 
-module.exports = UIFavouriteList;
+export default UIFavouriteList;

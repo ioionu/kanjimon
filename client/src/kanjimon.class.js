@@ -83,4 +83,4 @@ class KanjiMon {
 
 };
 
-module.exports = KanjiMon;
+export default KanjiMon;
