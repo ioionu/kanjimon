@@ -42,10 +42,10 @@ class UISearchBox extends Component {
     }
   }
   handleCharChange(e) {
-    if (e.length > 0) {
-      var char = e.trim();
+    if (e.target.value.length > 0) {
+      var char = e.target.value.trim();
       char = char.substr(0,1);
-      var keyword = e.trim();
+      var keyword = e.target.value.trim();
       this.setState({char: char, keyword:keyword});
     }
   }
