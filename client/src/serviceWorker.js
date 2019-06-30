@@ -1,7 +1,7 @@
 if(true) {
   var CACHE_NAME = 'cache-v1.4.0';
 
-  importScripts('js/sw-toolbox.js');
+  importScripts('sw-toolbox.js');
 
   toolbox.options.debug = true;
   //toolbox.options.cache.name = CACHE_NAME;

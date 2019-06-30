@@ -54,7 +54,9 @@ class UISearchBox extends Component {
     const { classes } = this.props;
 
     const SearchButton = withRouter(({history})=>(
-      <button onClick={(e)=>{this.handleSearch(e)}} label="Search" />
+      <button onClick={(e)=>{this.handleSearch(e)}}>
+        Search
+      </button>
     ))
 
     return (
@@ -67,7 +69,7 @@ class UISearchBox extends Component {
               hint="Search by kanji or english"
               onChange={(e)=>{this.handleCharChange(e)}}
               className="char"
-              />
+            />
           </div>
           <div>
             <SearchButton/>
