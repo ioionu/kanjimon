@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+// import ThreeDRotation from '@material-ui/icons/ThreeDRotation';
+import searchIcon from '../media/system-search.svg';
+
 /*
 import IconButton from 'material-ui/IconButton';
 import Search from 'material-ui-icons/Search';
@@ -55,13 +58,13 @@ class UISearchBox extends Component {
 
     const SearchButton = withRouter(({history})=>(
       <button onClick={(e)=>{this.handleSearch(e)}}>
-        Search
+        <img src={searchIcon} alt="josh!" />
       </button>
     ))
 
     return (
       <div className='menu'>
-        <div className="wrapper">
+        <div className="wrapper fuck">
           <div>
             <input
               type="text"

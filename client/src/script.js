@@ -19,7 +19,7 @@ import UIKanjiMon from './ui.class.js'
 import App from './app.class.js'
 var dict;
 
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && false) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/serviceWorker.js').then(registration => {
       console.log('SW registered: ', registration);

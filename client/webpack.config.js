@@ -43,13 +43,9 @@ module.exports = {
           ],
       },
       {
-        test: /\.(svg)$/,
-        loader: 'svg-url-loader?classPrefix'
-      },
-      {
         test: /\.(png|jpg|gif|svg)$/,
         use: [
-          'file-loader'
+          'url-loader'
         ]
       },
       {
